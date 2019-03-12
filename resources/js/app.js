@@ -1,6 +1,7 @@
 require('./bootstrap');
-
 window.Vue = require('vue');
+
+import router from './routes/index'
 
 /**
  * Components Globais
@@ -8,5 +9,6 @@ window.Vue = require('vue');
 Vue.component('test-component', require('./components/TestComponent').default)
 
 const app = new Vue({
+    router,
     el: '#app'
 });
