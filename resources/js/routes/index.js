@@ -1,9 +1,11 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import AdminComponent from '../components/admin/AdminComponent'; // DASHBOARD
-import CategoriesComponent from '../components/admin/pages/categories/CategoriesComponent'; // CATEGORIES
+import AdminComponent from '../components/admin/AdminComponent'; // ADMIN
 import DashboardComponent from '../components/admin/pages/dashboard/DashboardComponent'; // DASHBOARD
+
+import CategoriesComponent from '../components/admin/pages/categories/CategoriesComponent'; // CATEGORIES
+import AddCategoryComponent from '../components/admin/pages/categories/AddCategoryComponent'; // CATEGORY CREATE
 
 Vue.use(VueRouter)
 
@@ -12,7 +14,8 @@ const routes = [
         component: AdminComponent,
         children: [
             {path: '', component: DashboardComponent, name: 'admin.dashboard'},
-            {path: 'categories', component: CategoriesComponent, name: 'admin.categories'}
+            {path: 'categories', component: CategoriesComponent, name: 'admin.categories'},
+            {path: 'categories/create', component: AddCategoryComponent, name: 'admin.categories.create'}
         ]
     }
 ]
