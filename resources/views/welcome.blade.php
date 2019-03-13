@@ -68,7 +68,7 @@
     <body>
         <div id="app">
 
-            <admin-component></admin-component>
+            <router-view></router-view>
 
         </div> <!-- #app -->
 

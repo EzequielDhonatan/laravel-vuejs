@@ -29,7 +29,7 @@ route::get('me', 'Auth\AuthApiController@getAuthenticatedUser'); // RECUPERAR US
 route::group([
     'prefix'        => 'v1', 
     'namespace'     => 'Api\V1',
-    'middleware'    => 'auth:api'
+    // 'middleware'    => ''
 ], function() {
 
     // # CATEGORY

@@ -1,16 +1,54 @@
 <template>
     <div>
         
-        <h1 v-text="title"></h1>
+        <h1>Listagem da Categoria</h1>
+
+        <table class="table table-dark">
+
+            <thead>
+                <th>ID</th>
+                <th>NOME</th>
+                <th width="100">AÇÕES</th>
+            </thead>
+
+            <tbody>
+                <tr v-for="(category, index) in categories.data" :key="index">
+                    <td>{{ category.id }}</td>
+                    <td v-text="category.name"></td>
+                    <td>...</td>
+                </tr>
+            </tbody>
+            
+        </table> <!-- table table-dark -->
 
     </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
+    created () {
+        this.loadCategories()
+    },
     data () {
         return {
-            title: 'Listagem das Categorias'
+            categories: {
+                data: []
+            },
+        }
+    },
+    methods: {
+        loadCategories () {
+            axios.get('/api/v1/categories')
+                    .then(response => {
+                        console.log(response)
+
+                        this.categories = response
+                    })
+                    .catch(errors => {
+                        console.log(errors)
+                    })
         }
     }
 }
