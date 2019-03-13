@@ -1,7 +1,7 @@
 <template>
     <div>
         
-        <h1>Component Vue JS</h1>
+        <router-view></router-view>
 
     </div>
 </template>
@@ -11,3 +11,7 @@ export default {
     
 }
 </script>
+
+<style scoped>
+
+</style>
