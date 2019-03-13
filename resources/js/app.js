@@ -9,9 +9,10 @@ import store from './vuex/store'
  */
 // Vue.component('test-component', require('./components/TestComponent').default)
 Vue.component('admin-component', require('./components/admin/AdminComponent').default) // CATEGORIES
+Vue.component('preloader-component', require('./components/layouts/PreloaderComponent').default) // PRELOADER
 
 const app = new Vue({
     router,
-    store,
+    store, 
     el: '#app'
 });

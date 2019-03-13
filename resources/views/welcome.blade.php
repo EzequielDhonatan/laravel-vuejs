@@ -68,6 +68,8 @@
     <body>
         <div id="app">
 
+            <preloader-component></preloader-component>
+
             <router-view></router-view>
 
         </div> <!-- #app -->
