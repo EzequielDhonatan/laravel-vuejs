@@ -6,7 +6,7 @@
                 <router-link :to="{name: 'admin.dashboard'}">Dashboard</router-link>
             </li>
             <li>
-                <router-link :to="{name: 'admin.categories'}">Categorias</router-link>
+                <router-link :to="{name: 'admin.categories'}">Categorias ( {{ totalCategories }} )</router-link>
             </li>
         </ul>
         
@@ -17,7 +17,11 @@
 
 <script>
 export default {
-    
+    computed: {
+        totalCategories () {
+            return this.$store.state.categories.items.data.length
+        }
+    }
 }
 </script>
 
