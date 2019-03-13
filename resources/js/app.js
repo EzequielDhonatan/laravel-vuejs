@@ -8,7 +8,7 @@ import store from './vuex/store'
  * Components Globais
  */
 // Vue.component('test-component', require('./components/TestComponent').default)
-Vue.component('app-component', require('./components/admin/pages/categories/CategoriesComponent').default)
+Vue.component('admin-component', require('./components/admin/AdminComponent').default) // CATEGORIES
 
 const app = new Vue({
     router,

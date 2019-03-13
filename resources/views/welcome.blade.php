@@ -68,7 +68,7 @@
     <body>
         <div id="app">
 
-            <app-component></app-component>
+            <admin-component></admin-component>
 
         </div> <!-- #app -->
 
