@@ -1902,24 +1902,33 @@ __webpack_require__.r(__webpack_exports__);
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      category: {}
-    };
-  },
   props: {
     id: {
       require: true
     }
   },
   created: function created() {
-    var _this = this;
+    this.loadCategory();
+  },
+  data: function data() {
+    return {
+      category: {}
+    };
+  },
+  methods: {
+    loadCategory: function loadCategory() {
+      var _this = this;
 
-    this.$store.dispatch('loadCategory', this.id).then(function (response) {
-      return _this.category = response;
-    }).catch(function (error) {
-      console.log(error);
-    });
+      this.$store.dispatch('loadCategory', this.id).then(function (response) {
+        return _this.category = response;
+      }).catch(function (error) {
+        _this.$snotify.error('Categoria não encontrada', '404');
+
+        _this.$router.push({
+          name: 'admin.categories'
+        });
+      });
+    }
   },
   components: {
     formCat: _partials_FormCategoryComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
@@ -1953,17 +1962,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: function data() {
-    return {
-      errors: {}
-    };
-  },
   props: {
     category: {
       require: false,
@@ -1980,6 +1979,11 @@ __webpack_require__.r(__webpack_exports__);
       type: Boolean,
       default: false
     }
+  },
+  data: function data() {
+    return {
+      errors: {}
+    };
   },
   methods: {
     onSubmit: function onSubmit() {
@@ -20926,7 +20930,7 @@ var render = function() {
               }
             ],
             staticClass: "form-control",
-            attrs: { type: "", placeholder: "Nome da Categoria" },
+            attrs: { type: "text", placeholder: "Nome da Categoria" },
             domProps: { value: _vm.category.name },
             on: {
               input: function($event) {

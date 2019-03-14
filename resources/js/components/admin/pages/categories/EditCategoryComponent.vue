@@ -15,22 +15,29 @@
 import FormCategoryComponent from './partials/FormCategoryComponent';
 
 export default {
-    data () {
-        return {
-            category: {}
-        }
-    },
     props: {
         id: {
             require: true
         }
     },
     created () {
-        this.$store.dispatch('loadCategory', this.id)
+        this.loadCategory()
+    },
+    data () {
+        return {
+            category: {}
+        }
+    },
+    methods: {
+        loadCategory () {
+            this.$store.dispatch('loadCategory', this.id)
                         .then(response => this.category = response)
                         .catch(error => {
-                            console.log(error)
+                            this.$snotify.error('Categoria não encontrada', '404')
+
+                            this.$router.push({name: 'admin.categories'})
                         })
+        }
     },
     components: {
         formCat: FormCategoryComponent

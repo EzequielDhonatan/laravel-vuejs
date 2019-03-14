@@ -1,31 +1,21 @@
 <template>
-    <div>
-        
-        <form class="form" @submit.prevent="onSubmit">
+  <div>
+      <form class="form" @submit.prevent="onSubmit">
+          <div :class="['form-group', {'has-error': errors.name}]">
+              <div v-if="errors.name">{{ errors.name[0] }}</div>
+              <input type="text" v-model="category.name" class="form-control" placeholder="Nome da Categoria">
+          </div>
 
-            <div :class="['form-group', {'has-error': errors.name}]">
-                <div v-if="errors.name">{{ errors.name[0] }}</div>
-                <input type="" class="form-control" v-model="category.name" placeholder="Nome da Categoria">
-                <!--
-                <input type="" class="form-control" placeholder="Nome da Categoria" v-model="form.name">
-                -->
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Enviar</button>
-            </div>
-
-        </form>
-
-    </div>
+          <div class="form-group">
+              <button type="submit" class="btn btn-primary">Enviar</button>
+          </div>
+      </form>
+  </div>
 </template>
+
 
 <script>
 export default {
-    data () {
-        return {
-            errors: {}
-        }
-    },
     props: {
         category: {
             require: false,
@@ -41,6 +31,11 @@ export default {
             require: false,
             type: Boolean,
             default: false,
+        }
+    },
+    data () {
+        return {
+            errors: {}
         }
     },
     methods: {
