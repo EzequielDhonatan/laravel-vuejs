@@ -1,8 +1,14 @@
-require('./bootstrap');
-window.Vue = require('vue');
+require('./bootstrap')
+window.Vue = require('vue')
+
+/* Vue SNotify  */
+import SNotify from 'vue-snotify'
 
 import router from './routes/index'
 import store from './vuex/store'
+
+/* Vue SNotify  */
+Vue.use(SNotify, {toast: {showProgressBar: false}})
 
 /**
  * Components Globais
