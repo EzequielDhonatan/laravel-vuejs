@@ -3,42 +3,17 @@
         
         <h1>Adicionar nova categoria</h1>
 
-        <form class="form" @submit.prevent="submitForm">
-
-            <div class="form-group">
-                <input type="" class="form-control" v-model="name" placeholder="Nome da Categoria">
-                <!--
-                <input type="" class="form-control" placeholder="Nome da Categoria" v-model="form.name">
-                -->
-            </div>
-            <div class="form-group">
-                <button type="submit" class="btn btn-primary">Enviar</button>
-            </div>
-
-        </form>
+        <form-cat></form-cat>
 
     </div>
 </template>
 
 <script>
-export default {
-    data () {
-        return {
-            name: ''
+import FormCategoryComponent from './partials/FormCategoryComponent'
 
-            /*
-            formData: {
-                name: ''
-            }
-            */
-        }
-    },
-    methods: {
-        submitForm () {
-            this.$store.dispatch('storeCategory', {name: this.name})
-                            .then(() => this.$router.push({name: 'admin.categories'}))
-                            .catch()
-        }
+export default {
+    components: {
+        formCat: FormCategoryComponent
     }
 }
 </script>
