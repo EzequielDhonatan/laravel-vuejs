@@ -26,7 +26,8 @@ export default {
             type: Object|Array,
             default: () => {
                 return {
-                    name: ''
+                    id: '',
+                    name: '',
                 }
             }
         },
