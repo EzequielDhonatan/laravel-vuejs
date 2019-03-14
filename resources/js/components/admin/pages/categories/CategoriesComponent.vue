@@ -2,7 +2,16 @@
     <div>
         
         <h1>Listagem da Categoria</h1>
-        <router-link class="btn btn-success" :to="{name: 'admin.categories.create'}">Cadastrar</router-link>
+
+        <div class="row">
+            <div class="col-md-6">
+                <router-link class="btn btn-success" :to="{name: 'admin.categories.create'}">Cadastrar</router-link>
+            </div>
+
+            <div class="col-md-6">
+                <search @searchCategory="search"></search>
+            </div>
+        </div> <!-- row -->
 
         <table class="table table-dark">
 
@@ -32,12 +41,20 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios' // AXIOS
+
+import SearchCategoryComponent from './partials/SearchCategoryComponent'
 
 export default {
     created () {
         // LOAD
         this.loadCategories ()
+    },
+    data () {
+        return {
+            // SEARCH
+            name: '',
+        }
     },
     computed: {
         // CATEGORIES
@@ -78,6 +95,16 @@ export default {
                             this.$snotify.error('Erro ao deletar a categoria', 'Falha')
                             })
         },
+
+        // SEARCH
+        search (filter) {
+            this.name = filter
+
+            this.loadCategories()
+        }
+    },
+    components: {
+        search: SearchCategoryComponent
     }
 }
 </script>

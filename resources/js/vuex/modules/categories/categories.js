@@ -11,10 +11,10 @@ export default {
     },
     actions: {
         // LISTAR
-        loadCategories (context) {
+        loadCategories (context, params) {
             context.commit('PRELOADER', true) // STAT PRELOADER
 
-            axios.get('/api/v1/categories')
+            axios.get('/api/v1/categories', {params})
               .then(response => {
                 console.log(response)
 
