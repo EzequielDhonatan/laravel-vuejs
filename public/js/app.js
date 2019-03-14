@@ -2168,7 +2168,16 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  created: function created() {
+    this.loadProducts();
+  },
+  methods: {
+    loadProducts: function loadProducts() {
+      this.$store.dispatch('loadProducts');
+    }
+  }
+});
 
 /***/ }),
 
@@ -39275,6 +39284,20 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/config/configs.js":
+/*!****************************************!*\
+  !*** ./resources/js/config/configs.js ***!
+  \****************************************/
+/*! exports provided: URL_BASE */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "URL_BASE", function() { return URL_BASE; });
+var URL_BASE = '/api/v1/';
+
+/***/ }),
+
 /***/ "./resources/js/routes/index.js":
 /*!**************************************!*\
   !*** ./resources/js/routes/index.js ***!
@@ -39475,7 +39498,24 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _config_configs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../config/configs */ "./resources/js/config/configs.js");
+
+
+var RESOURCE = 'products';
+/* harmony default export */ __webpack_exports__["default"] = ({
+  loadProducts: function loadProducts(context) {
+    context.commit('PRELOADER', true);
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("".concat(_config_configs__WEBPACK_IMPORTED_MODULE_1__["URL_BASE"]).concat(RESOURCE)).then(function (response) {
+      return context.commit('LOAD_PRODUCTS', response.data);
+    }).catch(function (error) {
+      console.log(error);
+    }).finally(function () {
+      return context.commit('PRELOADER', false);
+    });
+  }
+});
 
 /***/ }),
 
@@ -39501,7 +39541,11 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  LOAD_PRODUCTS: function LOAD_PRODUCTS(state, products) {
+    state.items = products;
+  }
+});
 
 /***/ }),
 
@@ -39541,7 +39585,9 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
-  items: {}
+  items: {
+    data: []
+  }
 });
 
 /***/ }),
