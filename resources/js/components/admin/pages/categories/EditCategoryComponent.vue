@@ -1,12 +1,12 @@
 <template>
     <div>
         
-        <h1>Adicionar nova categoria</h1>
+        <h1>Editar Categoria</h1>
 
         <form class="form" @submit.prevent="submitForm">
 
             <div class="form-group">
-                <input type="" class="form-control" v-model="name" placeholder="Nome da Categoria">
+                <input type="" class="form-control" v-model="category.name" placeholder="Nome da Categoria">
                 <!--
                 <input type="" class="form-control" placeholder="Nome da Categoria" v-model="form.name">
                 -->
@@ -24,21 +24,22 @@
 export default {
     data () {
         return {
-            name: ''
-
-            /*
-            formData: {
+            category: {
                 name: ''
             }
-            */
         }
     },
-    methods: {
-        submitForm () {
-            this.$store.dispatch('storeCategory', {name: this.name})
-                            .then(() => this.$router.push({name: 'admin.categories'}))
-                            .catch()
+    props: {
+        id: {
+            require: true
         }
+    },
+    created () {
+        this.$store.dispatch('loadCategory', this.id)
+                        .then(response => this.category = response)
+                        .catch(error => {
+                            console.log(error)
+                        })
     }
 }
 </script>

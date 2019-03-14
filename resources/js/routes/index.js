@@ -6,6 +6,7 @@ import DashboardComponent from '../components/admin/pages/dashboard/DashboardCom
 
 import CategoriesComponent from '../components/admin/pages/categories/CategoriesComponent'; // CATEGORIES
 import AddCategoryComponent from '../components/admin/pages/categories/AddCategoryComponent'; // CATEGORY CREATE
+import EditCategoryComponent from '../components/admin/pages/categories/EditCategoryComponent'; // CATEGORY EDIT
 
 Vue.use(VueRouter)
 
@@ -14,8 +15,9 @@ const routes = [
         component: AdminComponent,
         children: [
             {path: '', component: DashboardComponent, name: 'admin.dashboard'},
-            {path: 'categories', component: CategoriesComponent, name: 'admin.categories'},
-            {path: 'categories/create', component: AddCategoryComponent, name: 'admin.categories.create'}
+            {path: 'categories', component: CategoriesComponent, name: 'admin.categories'}, // CATEGORIES
+            {path: 'categories/create', component: AddCategoryComponent, name: 'admin.categories.create'}, // CATEGORY CREATE
+            {path: 'categories/:id/edit', component: EditCategoryComponent, name: 'admin.categories.edit', props: true}, // CATEGORY EDIT
         ]
     }
 ]
