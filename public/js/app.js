@@ -1868,26 +1868,55 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
+    // LOAD
     this.loadCategories();
   },
   computed: {
+    // CATEGORIES
     categories: function categories() {
       return this.$store.state.categories.items;
     }
   },
   methods: {
+    // LOAD
     loadCategories: function loadCategories() {
-      this.$store.dispatch('loadCategories');
+      this.$store.dispatch('loadCategories', {
+        name: this.name
+      });
     },
-    destroy: function destroy(category) {
+    // CONFIRMAR DELETAR
+    confirmDestroy: function confirmDestroy(category) {
       var _this = this;
 
-      this.$store.dispatch('destroyCategory', category.id).then(function () {
-        _this.$snotify.success("Sucesso ao deletar a categoria: ".concat(category.name));
+      this.$snotify.error("Deseja realmente deletar a categoria: ".concat(category.name), 'Deletar?', {
+        timout: 10000,
+        showProgressBar: true,
+        closeOnClick: true,
+        buttons: [{
+          text: 'Não',
+          action: function action() {
+            return console.log('Não deletou...');
+          }
+        }, {
+          text: 'Sim',
+          action: function action() {
+            return _this.destroy(category);
+          }
+        }]
+      });
+    },
+    // DELETAR
+    destroy: function destroy(category) {
+      var _this2 = this;
 
-        _this.loadCategories();
+      this.$store.dispatch('destroyCategory', category.id).then(function () {
+        _this2.$snotify.success("Sucesso ao deletar a categoria: ".concat(category.name));
+
+        _this2.loadCategories();
       }).catch(function (error) {
-        _this.$snotify.error('Erro ao deletar a categoria', 'Falha');
+        console.log(error);
+
+        _this2.$snotify.error('Erro ao deletar a categoria', 'Falha');
       });
     }
   }
@@ -20850,7 +20879,7 @@ var render = function() {
                       on: {
                         click: function($event) {
                           $event.preventDefault()
-                          return _vm.destroy(category)
+                          return _vm.confirmDestroy(category)
                         }
                       }
                     },

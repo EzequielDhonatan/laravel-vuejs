@@ -21,7 +21,7 @@
                             Editar
                         </router-link>
 
-                        <a href="" class="btn btn-danger" @click.prevent="destroy(category)">Excluir</a>
+                        <a href="" class="btn btn-danger" @click.prevent="confirmDestroy(category)">Excluir</a>
                     </td>
                 </tr>
             </tbody>
@@ -36,29 +36,48 @@ import axios from 'axios'
 
 export default {
     created () {
+        // LOAD
         this.loadCategories ()
     },
     computed: {
+        // CATEGORIES
         categories () {
             return this.$store.state.categories.items
         }
     },
     methods: {
+        // LOAD
         loadCategories () {
-            this.$store.dispatch('loadCategories')
+            this.$store.dispatch('loadCategories', {name: this.name})
         },
 
+        // CONFIRMAR DELETAR
+        confirmDestroy (category) {
+        this.$snotify.error(`Deseja realmente deletar a categoria: ${category.name}`, 'Deletar?', {
+                timout: 10000,
+                showProgressBar: true,
+                closeOnClick: true,
+                buttons: [
+                {text: 'Não', action: () => console.log('Não deletou...')},
+                {text: 'Sim', action: () => this.destroy(category)}
+                ]
+            })
+        },
+
+        // DELETAR
         destroy (category) {
             this.$store.dispatch('destroyCategory', category.id)
                             .then(() => {
-                                this.$snotify.success(`Sucesso ao deletar a categoria: ${category.name}`)
+                            this.$snotify.success(`Sucesso ao deletar a categoria: ${category.name}`)
 
-                                this.loadCategories ()
+                            this.loadCategories()
                             })
                             .catch(error => {
-                                this.$snotify.error('Erro ao deletar a categoria', 'Falha')
+                            console.log(error)
+
+                            this.$snotify.error('Erro ao deletar a categoria', 'Falha')
                             })
-        }
+        },
     }
 }
 </script>
