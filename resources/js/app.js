@@ -4,8 +4,14 @@ window.Vue = require('vue')
 /* Vue SNotify  */
 import SNotify from 'vue-snotify'
 
+// Vue Router
 import router from './routes/index'
+
+// Vuex
 import store from './vuex/store'
+
+// Vodal
+import Vodal from 'vodal';
 
 /* Vue SNotify  */
 Vue.use(SNotify, {toast: {showProgressBar: false}})
