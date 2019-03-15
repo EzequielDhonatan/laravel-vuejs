@@ -2364,14 +2364,42 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    update: {
+      require: false,
+      type: Boolean,
+      default: false
+    },
+    product: {
+      require: false,
+      type: Object,
+      default: function _default() {
+        return {
+          id: '',
+          name: '',
+          description: '',
+          category_id: 13
+        };
+      }
+    }
+  },
   data: function data() {
     return {
-      product: {
-        name: '',
-        description: ''
-      },
       errors: {}
     };
+  },
+  methods: {
+    onSubmit: function onSubmit() {
+      var _this = this;
+
+      this.$store.dispatch('storeProduct', this.product).then(function () {
+        _this.$snotify.success('Sucesso ao cadastrar!');
+      }).catch(function (errors) {
+        _this.$snotify.error('Algo Errado', 'Erro');
+
+        _this.errors = errors.data.errors;
+      });
+    }
   }
 });
 
@@ -21860,73 +21888,85 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("form", { staticClass: "form" }, [
-      _c("div", { class: ["form-group", { "has-error": _vm.errors.name }] }, [
-        _vm.errors.name
-          ? _c("div", [_vm._v(_vm._s(_vm.errors.name[0]))])
-          : _vm._e(),
-        _vm._v(" "),
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.product.name,
-              expression: "product.name"
-            }
-          ],
-          staticClass: "form-control",
-          attrs: { type: "text", placeholder: "Nome da Produto" },
-          domProps: { value: _vm.product.name },
-          on: {
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.$set(_vm.product, "name", $event.target.value)
-            }
+    _c(
+      "form",
+      {
+        staticClass: "form",
+        on: {
+          submit: function($event) {
+            $event.preventDefault()
+            return _vm.onSubmit($event)
           }
-        })
-      ]),
-      _vm._v(" "),
-      _c(
-        "div",
-        { class: ["form-group", { "has-error": _vm.errors.description }] },
-        [
-          _vm.errors.description
-            ? _c("div", [_vm._v(_vm._s(_vm.errors.description[0]))])
+        }
+      },
+      [
+        _c("div", { class: ["form-group", { "has-error": _vm.errors.name }] }, [
+          _vm.errors.name
+            ? _c("div", [_vm._v(_vm._s(_vm.errors.name[0]))])
             : _vm._e(),
           _vm._v(" "),
-          _c("textarea", {
+          _c("input", {
             directives: [
               {
                 name: "model",
                 rawName: "v-model",
-                value: _vm.product.description,
-                expression: "product.description"
+                value: _vm.product.name,
+                expression: "product.name"
               }
             ],
             staticClass: "form-control",
-            attrs: {
-              cols: "30",
-              rows: "10",
-              placeholder: "Descrição do Produto"
-            },
-            domProps: { value: _vm.product.description },
+            attrs: { type: "text", placeholder: "Nome do Produto" },
+            domProps: { value: _vm.product.name },
             on: {
               input: function($event) {
                 if ($event.target.composing) {
                   return
                 }
-                _vm.$set(_vm.product, "description", $event.target.value)
+                _vm.$set(_vm.product, "name", $event.target.value)
               }
             }
           })
-        ]
-      ),
-      _vm._v(" "),
-      _vm._m(0)
-    ])
+        ]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { class: ["form-group", { "has-error": _vm.errors.description }] },
+          [
+            _vm.errors.description
+              ? _c("div", [_vm._v(_vm._s(_vm.errors.description[0]))])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("textarea", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.product.description,
+                  expression: "product.description"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: {
+                cols: "30",
+                rows: "10",
+                placeholder: "Descrição do Produto"
+              },
+              domProps: { value: _vm.product.description },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(_vm.product, "description", $event.target.value)
+                }
+              }
+            })
+          ]
+        ),
+        _vm._v(" "),
+        _vm._m(0)
+      ]
+    )
   ])
 }
 var staticRenderFns = [
@@ -40466,6 +40506,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var RESOURCE = 'products';
 /* harmony default export */ __webpack_exports__["default"] = ({
+  // LISTAR
   loadProducts: function loadProducts(context, params) {
     context.commit('PRELOADER', true);
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("".concat(_config_configs__WEBPACK_IMPORTED_MODULE_1__["URL_BASE"]).concat(RESOURCE), {
@@ -40476,6 +40517,20 @@ var RESOURCE = 'products';
       console.log(error);
     }).finally(function () {
       return context.commit('PRELOADER', false);
+    });
+  },
+  // CADASTRAR
+  storeProduct: function storeProduct(context, params) {
+    context.commit('PRELOADER', true); // STAT PRELOADER
+
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("".concat(_config_configs__WEBPACK_IMPORTED_MODULE_1__["URL_BASE"]).concat(RESOURCE), params).then(function (response) {
+        return resolve();
+      }).catch(function (error) {
+        return reject(error.response);
+      }).finally(function () {
+        return context.commit('PRELOADER', false);
+      }); // STOP PRELOADER
     });
   }
 });
