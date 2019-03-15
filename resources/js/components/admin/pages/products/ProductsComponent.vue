@@ -3,6 +3,16 @@
         
         <h1 class="text-center">Listagem de Produtos</h1>
 
+        <div class="row">
+            <div class="col-md-6">
+                <button class="btn btn-success">Adicionar</button>
+            </div>
+
+            <div class="col-md-6">
+                <search @search="searchForm"></search>
+            </div>
+        </div> <!-- row -->
+
         <table class="table table-dark">
 
             <thead>
@@ -37,22 +47,23 @@
         </ul>
         -->
 
-        <pagination
-            :pagination="products"
-            :offset="6"
-            @paginate="loadProducts">
-
-        </pagination>
+        <pagination :pagination="products" :offset="6" @paginate="loadProducts"></pagination>
 
     </div>
 </template>
 
 <script>
-import PaginationComponent from '../../../layouts/PaginationComponent'
+import PaginationComponent from '../../../layouts/PaginationComponent' // PAGINATION
+import SearchComponent from '../../layouts/SearchComponent' //
 
 export default {
     created () {
         this.loadProducts(1)
+    },
+    data () {
+        return {
+            search: '',
+        }
     },
     computed: {
         products () {
@@ -60,17 +71,25 @@ export default {
         },
         params () {
             return {
-                page: this.products.current_page
+                page: this.products.current_page,
+                filter: this.search,
             }
         }
     },
     methods: {
         loadProducts (page) {
             this.$store.dispatch('loadProducts', {...this.params, page})
+        },
+
+        searchForm (filter) {
+            this.search = filter
+
+            this.loadProducts (1)
         }
     },
     components: {
-        pagination: PaginationComponent
+        pagination: PaginationComponent, // PAGINATION
+        search: SearchComponent // SEARCH
     }
 }
 </script>
