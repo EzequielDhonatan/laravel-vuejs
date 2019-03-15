@@ -3,6 +3,14 @@
         
         <form class="form" @submit.prevent="onSubmit">
 
+            <div :class="['form-group', {'has-error': errors.category_id}]">
+                <div v-if="errors.category_id">{{ errors.category_id[0] }}</div>
+                <select class="form-control" v-model="product.category_id">
+                    <option value="">Selecione a categoria</option>
+                    <option v-for="category in categories" :key="category.id" :value="category.id">{{ category.name }}</option>
+                </select>
+            </div>
+
             <div :class="['form-group', {'has-error': errors.name}]">
                 <div v-if="errors.name">{{ errors.name[0] }}</div>
                 <input type="text" v-model="product.name" class="form-control" placeholder="Nome do Produto">
@@ -38,9 +46,14 @@ export default {
                     id: '',
                     name: '',
                     description: '',
-                    category_id: 13
+                    category_id: ''
                 }
             }
+        }
+    },
+    computed: {
+        categories () {
+            return this.$store.state.categories.items.data
         }
     },
     data () {

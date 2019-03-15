@@ -2366,6 +2366,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     update: {
@@ -2381,9 +2389,14 @@ __webpack_require__.r(__webpack_exports__);
           id: '',
           name: '',
           description: '',
-          category_id: 13
+          category_id: ''
         };
       }
+    }
+  },
+  computed: {
+    categories: function categories() {
+      return this.$store.state.categories.items.data;
     }
   },
   data: function data() {
@@ -2459,6 +2472,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     pagination: {
@@ -2505,7 +2539,7 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     changePage: function changePage(page) {
       // Dispara o evento @paginate do Component Pai
-      this.$emit('paginate', page);
+      this.$emit("paginate", page);
     }
   }
 });
@@ -21918,6 +21952,62 @@ var render = function() {
         }
       },
       [
+        _c(
+          "div",
+          { class: ["form-group", { "has-error": _vm.errors.category_id }] },
+          [
+            _vm.errors.category_id
+              ? _c("div", [_vm._v(_vm._s(_vm.errors.category_id[0]))])
+              : _vm._e(),
+            _vm._v(" "),
+            _c(
+              "select",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.product.category_id,
+                    expression: "product.category_id"
+                  }
+                ],
+                staticClass: "form-control",
+                on: {
+                  change: function($event) {
+                    var $$selectedVal = Array.prototype.filter
+                      .call($event.target.options, function(o) {
+                        return o.selected
+                      })
+                      .map(function(o) {
+                        var val = "_value" in o ? o._value : o.value
+                        return val
+                      })
+                    _vm.$set(
+                      _vm.product,
+                      "category_id",
+                      $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                    )
+                  }
+                }
+              },
+              [
+                _c("option", { attrs: { value: "" } }, [
+                  _vm._v("Selecione a categoria")
+                ]),
+                _vm._v(" "),
+                _vm._l(_vm.categories, function(category) {
+                  return _c(
+                    "option",
+                    { key: category.id, domProps: { value: category.id } },
+                    [_vm._v(_vm._s(category.name))]
+                  )
+                })
+              ],
+              2
+            )
+          ]
+        ),
+        _vm._v(" "),
         _c("div", { class: ["form-group", { "has-error": _vm.errors.name }] }, [
           _vm.errors.name
             ? _c("div", [_vm._v(_vm._s(_vm.errors.name[0]))])
@@ -22051,34 +22141,32 @@ var render = function() {
           : _vm._e(),
         _vm._v(" "),
         _vm._l(_vm.pagesNumber, function(page, index) {
-          return _vm.pagination.last_page > 1
-            ? _c(
-                "li",
+          return _c(
+            "li",
+            {
+              key: index,
+              class: [
+                "page-item",
+                { active: page == _vm.pagination.current_page }
+              ]
+            },
+            [
+              _c(
+                "a",
                 {
-                  key: index,
-                  class: [
-                    "page-item",
-                    { active: page == _vm.pagination.current_page }
-                  ]
+                  staticClass: "page-link",
+                  attrs: { href: "#" },
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      return _vm.changePage(page)
+                    }
+                  }
                 },
-                [
-                  _c(
-                    "a",
-                    {
-                      staticClass: "page-link",
-                      attrs: { href: "#" },
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          return _vm.changePage(page)
-                        }
-                      }
-                    },
-                    [_vm._v("\n            " + _vm._s(page) + "\n            ")]
-                  )
-                ]
+                [_vm._v(_vm._s(page))]
               )
-            : _vm._e()
+            ]
+          )
         }),
         _vm._v(" "),
         _vm.pagination.current_page < _vm.pagination.last_page
@@ -39364,7 +39452,9 @@ var app = new Vue({
   router: _routes_index__WEBPACK_IMPORTED_MODULE_1__["default"],
   store: _vuex_store__WEBPACK_IMPORTED_MODULE_2__["default"],
   el: '#app'
-});
+}); // LOAD CATEGORIES
+
+_vuex_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch('loadCategories');
 
 /***/ }),
 
