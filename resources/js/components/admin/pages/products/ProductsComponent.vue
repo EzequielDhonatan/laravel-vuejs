@@ -14,7 +14,11 @@
                 @hide="hideModal"
                 :width="600"
                 :height="500">
-                <product-form @success="success"></product-form>
+                <product-form 
+                    @success="success"
+                    :update="update"
+                    :product="product"
+                ></product-form>
             </vodal>
 
             <div class="col-md-6">
@@ -37,8 +41,8 @@
                     <td>...</td>
                     <td>{{ product.name }}</td>
                     <td>
-                        <a href="" class="btn btn-info">Editar</a>
-                        <a href="" class="btn btn-danger">Deletar</a>
+                        <a href="#" class="btn btn-info" @click.prevent="edit(product.id)">Editar</a>
+                        <a href="#" class="btn btn-danger">Deletar</a>
                     </td>
                 </tr>
             </tbody>
@@ -73,9 +77,16 @@ export default {
         this.loadProducts(1)
     },
     data () {
-        return {
-            search: '',
-            showModal: false,
+    return {
+        search: '',
+        showModal: false,
+        product: {
+            id: '',
+            name: '',
+            description: '',
+            category_id: '',
+        },
+        update: false,
         }
     },
     computed: {
@@ -94,15 +105,33 @@ export default {
             this.$store.dispatch('loadProducts', {...this.params, page})
         },
 
+        // EDITAR
+        edit (id) {
+            this.$store.dispatch('loadProduct', id)
+                            .then(response => {
+                                this.product =  response
+
+                                this.showModal = true
+
+                                this.update = true
+                            })
+                            .catch(() => {
+                                this.$snotify.error('Erro ao carregar o produto')
+                            })
+        },
+
+
+        // PESQUISAR
         searchForm (filter) {
             this.search = filter
 
             this.loadProducts (1)
         },
-
+        
         hideModal () {
-        this.showModal = false
+            this.showModal = false
         },
+        
         success () {
             this.hideModal()
 

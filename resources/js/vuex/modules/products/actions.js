@@ -17,6 +17,18 @@ export default {
                 .finally(() => context.commit('PRELOADER', false))
     },
 
+    // EDITAR
+    loadProduct (context, id) {
+        context.commit('PRELOADER', true)
+
+            return new Promise((resolve, reject) => {
+                axios.get(`${URL_BASE}${RESOURCE}/${id}`,)
+                        .then(response => resolve(response.data))
+                        .catch(error => reject())
+                        .finally(() => context.commit('PRELOADER', false))
+                })
+    },
+
     // CADASTRAR
     storeProduct (context, params) {
         context.commit('PRELOADER', true) // STAT PRELOADER
@@ -27,5 +39,5 @@ export default {
                     .catch(error => reject(error.response))
                     .finally(() => context.commit('PRELOADER', false)) // STOP PRELOADER
         })
-    },
+    }
 }
