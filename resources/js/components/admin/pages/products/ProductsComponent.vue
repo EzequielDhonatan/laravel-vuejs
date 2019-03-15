@@ -26,6 +26,7 @@
             
         </table> <!-- table table-dark -->
 
+        <!--
         <ul v-if="products.last_page > 1">
             <li v-if="products.current_page > 1">
                 <a href="#" @click.prevent="loadProducts(products.current_page - 1)">Anterior</a>
@@ -34,11 +35,21 @@
                 <a href="#" @click.prevent="loadProducts(products.current_page + 1)">Próxima</a>
             </li>
         </ul>
+        -->
+
+        <pagination
+            :pagination="products"
+            :offset="6"
+            @paginate="loadProducts">
+
+        </pagination>
 
     </div>
 </template>
 
 <script>
+import PaginationComponent from '../../../layouts/PaginationComponent'
+
 export default {
     created () {
         this.loadProducts(1)
@@ -57,6 +68,9 @@ export default {
         loadProducts (page) {
             this.$store.dispatch('loadProducts', {...this.params, page})
         }
+    },
+    components: {
+        pagination: PaginationComponent
     }
 }
 </script>
