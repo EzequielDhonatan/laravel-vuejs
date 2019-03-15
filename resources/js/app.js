@@ -1,7 +1,7 @@
 require('./bootstrap')
 window.Vue = require('vue')
 
-/* Vue SNotify  */
+// Vue SNotify
 import SNotify from 'vue-snotify'
 
 // Vue Router
@@ -13,8 +13,11 @@ import store from './vuex/store'
 // Vodal
 import Vodal from 'vodal';
 
-/* Vue SNotify  */
+// Vue SNotify
 Vue.use(SNotify, {toast: {showProgressBar: false}})
+
+// VODAL
+Vue.component(Vodal);
 
 /**
  * Components Globais

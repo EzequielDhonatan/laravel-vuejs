@@ -5,8 +5,18 @@
 
         <div class="row">
             <div class="col-md-6">
-                <button class="btn btn-success">Adicionar</button>
+                <button class="btn btn-success" @click.prevent="showModal = true">Novo</button>
             </div>
+
+            <vodal
+                :show="showModal"
+                animation="zoom"
+                @hide="hideModal"
+                :width="600"
+                :height="500">
+
+                <product-form></product-form>
+            </vodal>
 
             <div class="col-md-6">
                 <search @search="searchForm"></search>
@@ -53,8 +63,11 @@
 </template>
 
 <script>
+import Vodal from 'vodal' // VODAL
+
 import PaginationComponent from '../../../layouts/PaginationComponent' // PAGINATION
-import SearchComponent from '../../layouts/SearchComponent' //
+import SearchComponent from '../../layouts/SearchComponent' // SEARCH
+import ProductForm from './partials/ProductForm' // PRODUCT FORM
 
 export default {
     created () {
@@ -63,6 +76,7 @@ export default {
     data () {
         return {
             search: '',
+            showModal: false,
         }
     },
     computed: {
@@ -85,11 +99,17 @@ export default {
             this.search = filter
 
             this.loadProducts (1)
+        },
+
+        hideModal () {
+        this.showModal = false
         }
     },
     components: {
         pagination: PaginationComponent, // PAGINATION
-        search: SearchComponent // SEARCH
+        search: SearchComponent, // SEARCH,
+        Vodal, // VODAL
+        ProductForm // PRODUCT FORM
     }
 }
 </script>
