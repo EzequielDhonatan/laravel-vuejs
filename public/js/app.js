@@ -2398,12 +2398,25 @@ __webpack_require__.r(__webpack_exports__);
       this.$store.dispatch('storeProduct', this.product).then(function () {
         _this.$snotify.success('Sucesso ao cadastrar!');
 
+        _this.reset();
+
         _this.$emit('success');
       }).catch(function (errors) {
         _this.$snotify.error('Algo Errado', 'Erro');
 
         _this.errors = errors.data.errors;
       });
+    },
+    reset: function reset() {
+      this.errors = {}; // RESET ERRORS
+
+      this.product = {
+        id: '',
+        name: '',
+        description: '',
+        category_id: 13 // RESET PRODUCT
+
+      };
     }
   }
 });
@@ -40533,7 +40546,9 @@ var RESOURCE = 'products';
         return resolve();
       }).catch(function (error) {
         return reject(error.response);
-      }); // .finally(() => context.commit('PRELOADER', false)) // STOP PRELOADER
+      }).finally(function () {
+        return context.commit('PRELOADER', false);
+      }); // STOP PRELOADER
     });
   }
 });

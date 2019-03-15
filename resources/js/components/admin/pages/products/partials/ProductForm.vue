@@ -54,6 +54,8 @@ export default {
                             .then(() => {
                                 this.$snotify.success('Sucesso ao cadastrar!')
 
+                                this.reset()
+
                                 this.$emit('success')
                             })
                             .catch(errors => {
@@ -61,6 +63,17 @@ export default {
 
                                 this.errors = errors.data.errors
                             })
+        },
+
+        reset () {
+            this.errors = {}  // RESET ERRORS
+
+            this.product = {
+                    id: '',
+                    name: '',
+                    description: '',
+                    category_id: 13
+            } // RESET PRODUCT
         }
     }
 }
