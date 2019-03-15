@@ -2418,26 +2418,23 @@ __webpack_require__.r(__webpack_exports__);
       }
     }
   },
-  computed: {
-    categories: function categories() {
-      return this.$store.state.categories.items.data;
-    }
-  },
   data: function data() {
     return {
       errors: {}
     };
   },
+  computed: {
+    categories: function categories() {
+      return this.$store.state.categories.items.data;
+    }
+  },
   methods: {
     onSubmit: function onSubmit() {
       var _this = this;
 
-      this.$store.dispatch('storeProduct', this.product).then(function () {
-        _this.$snotify.success('Sucesso ao cadastrar!');
-
-        _this.reset();
-
-        _this.$emit('success');
+      var action = this.update ? 'updateProduct' : 'storeProduct';
+      this.$store.dispatch(action, this.product).then(function () {
+        _this.$snotify.success('Sucesso!');
       }).catch(function (errors) {
         _this.$snotify.error('Algo Errado', 'Erro');
 
@@ -40650,7 +40647,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var RESOURCE = 'products';
 /* harmony default export */ __webpack_exports__["default"] = ({
-  // LISTAR
+  // CARREGAR PRODUTOS / CADASTRAR
   loadProducts: function loadProducts(context, params) {
     context.commit('PRELOADER', true);
     axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("".concat(_config_configs__WEBPACK_IMPORTED_MODULE_1__["URL_BASE"]).concat(RESOURCE), {
@@ -40663,7 +40660,7 @@ var RESOURCE = 'products';
       return context.commit('PRELOADER', false);
     });
   },
-  // EDITAR
+  // CARREGAR EDITAR / ATUALIZAR
   loadProduct: function loadProduct(context, id) {
     context.commit('PRELOADER', true);
     return new Promise(function (resolve, reject) {
@@ -40685,9 +40682,19 @@ var RESOURCE = 'products';
         return resolve();
       }).catch(function (error) {
         return reject(error.response);
-      }).finally(function () {
-        return context.commit('PRELOADER', false);
-      }); // STOP PRELOADER
+      }); // .finally(() => context.commit('PRELOADER', false)) // STOP PRELOADER
+    });
+  },
+  // EDITAR / ATUALIZAR
+  updateProduct: function updateProduct(context, params) {
+    context.commit('PRELOADER', true);
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("".concat(_config_configs__WEBPACK_IMPORTED_MODULE_1__["URL_BASE"]).concat(RESOURCE, "/").concat(params.id), params).then(function (response) {
+        return resolve();
+      }).catch(function (error) {
+        context.commit('PRELOADER', false);
+        reject(error.response);
+      }); // .finally(() => context.commit('PRELOADER', false))
     });
   }
 });

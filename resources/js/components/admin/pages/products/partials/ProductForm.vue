@@ -48,12 +48,7 @@ export default {
                     description: '',
                     category_id: ''
                 }
-            }  
-        }
-    },
-    computed: {
-        categories () {
-            return this.$store.state.categories.items.data
+            }
         }
     },
     data () {
@@ -61,15 +56,18 @@ export default {
             errors: {}
         }
     },
+    computed: {
+        categories () {
+            return this.$store.state.categories.items.data
+        }
+    },
     methods: {
         onSubmit () {
-            this.$store.dispatch('storeProduct', this.product)
+            let action = this.update ? 'updateProduct' : 'storeProduct'
+
+            this.$store.dispatch(action, this.product)
                             .then(() => {
-                                this.$snotify.success('Sucesso ao cadastrar!')
-
-                                this.reset()
-
-                                this.$emit('success')
+                                this.$snotify.success('Sucesso!')
                             })
                             .catch(errors => {
                                 this.$snotify.error('Algo Errado', 'Erro')

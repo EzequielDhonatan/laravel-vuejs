@@ -5,7 +5,7 @@ const RESOURCE = 'products'
 
 export default {
 
-    // LISTAR
+    // CARREGAR PRODUTOS / CADASTRAR
     loadProducts (context, params) {
         context.commit('PRELOADER', true)
 
@@ -17,7 +17,7 @@ export default {
                 .finally(() => context.commit('PRELOADER', false))
     },
 
-    // EDITAR
+    // CARREGAR EDITAR / ATUALIZAR
     loadProduct (context, id) {
         context.commit('PRELOADER', true)
 
@@ -37,7 +37,23 @@ export default {
             axios.post(`${URL_BASE}${RESOURCE}`, params)
                     .then(response => resolve())
                     .catch(error => reject(error.response))
-                    .finally(() => context.commit('PRELOADER', false)) // STOP PRELOADER
+                    // .finally(() => context.commit('PRELOADER', false)) // STOP PRELOADER
         })
-    }
+    },
+
+    // EDITAR / ATUALIZAR
+    updateProduct (context, params) {
+        context.commit('PRELOADER', true)
+        
+        return new Promise((resolve, reject) => {
+            axios.put(`${URL_BASE}${RESOURCE}/${params.id}`, params)
+                    .then(response => resolve())
+                    .catch(error => {
+                        context.commit('PRELOADER', false)
+                        
+                        reject(error.response)
+                    })
+                    // .finally(() => context.commit('PRELOADER', false))
+        })
+    },
 }
