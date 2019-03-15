@@ -2160,6 +2160,13 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
 //
 //
 //
@@ -2199,16 +2206,23 @@ __webpack_require__.r(__webpack_exports__);
 //
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
-    this.loadProducts();
+    this.loadProducts(1);
   },
   computed: {
     products: function products() {
       return this.$store.state.products.items;
+    },
+    params: function params() {
+      return {
+        page: this.products.current_page
+      };
     }
   },
   methods: {
-    loadProducts: function loadProducts() {
-      this.$store.dispatch('loadProducts');
+    loadProducts: function loadProducts(page) {
+      this.$store.dispatch('loadProducts', _objectSpread({}, this.params, {
+        page: page
+      }));
     }
   }
 });
@@ -21348,19 +21362,6 @@ var render = function() {
   return _c("div", [
     _c("h1", { staticClass: "text-center" }, [_vm._v("Listagem de Produtos")]),
     _vm._v(" "),
-    _c("div", { staticClass: "row" }, [
-      _c(
-        "div",
-        { staticClass: "col-md-6" },
-        [
-          _c("router-link", { staticClass: "btn btn-success" }, [
-            _vm._v("Cadastrar")
-          ])
-        ],
-        1
-      )
-    ]),
-    _vm._v(" "),
     _c("table", { staticClass: "table table-dark" }, [
       _vm._m(0),
       _vm._v(" "),
@@ -21379,7 +21380,47 @@ var render = function() {
         }),
         0
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _vm.products.last_page > 1
+      ? _c("ul", [
+          _vm.products.current_page > 1
+            ? _c("li", [
+                _c(
+                  "a",
+                  {
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.loadProducts(_vm.products.current_page - 1)
+                      }
+                    }
+                  },
+                  [_vm._v("Anterior")]
+                )
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.products.current_page < _vm.products.last_page
+            ? _c("li", [
+                _c(
+                  "a",
+                  {
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.loadProducts(_vm.products.current_page + 1)
+                      }
+                    }
+                  },
+                  [_vm._v("Próxima")]
+                )
+              ])
+            : _vm._e()
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = [
@@ -39596,9 +39637,11 @@ __webpack_require__.r(__webpack_exports__);
 
 var RESOURCE = 'products';
 /* harmony default export */ __webpack_exports__["default"] = ({
-  loadProducts: function loadProducts(context) {
+  loadProducts: function loadProducts(context, params) {
     context.commit('PRELOADER', true);
-    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("".concat(_config_configs__WEBPACK_IMPORTED_MODULE_1__["URL_BASE"]).concat(RESOURCE)).then(function (response) {
+    axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("".concat(_config_configs__WEBPACK_IMPORTED_MODULE_1__["URL_BASE"]).concat(RESOURCE), {
+      params: params
+    }).then(function (response) {
       return context.commit('LOAD_PRODUCTS', response.data);
     }).catch(function (error) {
       console.log(error);

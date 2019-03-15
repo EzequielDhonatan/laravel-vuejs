@@ -3,12 +3,6 @@
         
         <h1 class="text-center">Listagem de Produtos</h1>
 
-        <div class="row">
-            <div class="col-md-6">
-                <router-link class="btn btn-success">Cadastrar</router-link>
-            </div>
-        </div> <!-- row -->
-
         <table class="table table-dark">
 
             <thead>
@@ -32,22 +26,36 @@
             
         </table> <!-- table table-dark -->
 
+        <ul v-if="products.last_page > 1">
+            <li v-if="products.current_page > 1">
+                <a href="#" @click.prevent="loadProducts(products.current_page - 1)">Anterior</a>
+            </li>
+            <li v-if="products.current_page < products.last_page">
+                <a href="#" @click.prevent="loadProducts(products.current_page + 1)">Próxima</a>
+            </li>
+        </ul>
+
     </div>
 </template>
 
 <script>
 export default {
     created () {
-        this.loadProducts()
+        this.loadProducts(1)
     },
     computed: {
         products () {
             return this.$store.state.products.items
+        },
+        params () {
+            return {
+                page: this.products.current_page
+            }
         }
     },
     methods: {
-        loadProducts () {
-            this.$store.dispatch('loadProducts')
+        loadProducts (page) {
+            this.$store.dispatch('loadProducts', {...this.params, page})
         }
     }
 }
