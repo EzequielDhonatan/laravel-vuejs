@@ -14,8 +14,7 @@
                 @hide="hideModal"
                 :width="600"
                 :height="500">
-
-                <product-form></product-form>
+                <product-form @success="success"></product-form>
             </vodal>
 
             <div class="col-md-6">
@@ -103,6 +102,11 @@ export default {
 
         hideModal () {
         this.showModal = false
+        },
+        success () {
+            this.hideModal()
+
+            this.loadProducts(1)
         }
     },
     components: {

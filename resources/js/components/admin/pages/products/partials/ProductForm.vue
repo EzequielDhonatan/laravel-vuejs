@@ -53,6 +53,8 @@ export default {
             this.$store.dispatch('storeProduct', this.product)
                             .then(() => {
                                 this.$snotify.success('Sucesso ao cadastrar!')
+
+                                this.$emit('success')
                             })
                             .catch(errors => {
                                 this.$snotify.error('Algo Errado', 'Erro')

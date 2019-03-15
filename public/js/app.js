@@ -2272,7 +2272,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
  // VODAL
 
  // PAGINATION
@@ -2314,6 +2313,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     hideModal: function hideModal() {
       this.showModal = false;
+    },
+    success: function success() {
+      this.hideModal();
+      this.loadProducts(1);
     }
   },
   components: {
@@ -2394,6 +2397,8 @@ __webpack_require__.r(__webpack_exports__);
 
       this.$store.dispatch('storeProduct', this.product).then(function () {
         _this.$snotify.success('Sucesso ao cadastrar!');
+
+        _this.$emit('success');
       }).catch(function (errors) {
         _this.$snotify.error('Algo Errado', 'Erro');
 
@@ -21794,7 +21799,7 @@ var render = function() {
               },
               on: { hide: _vm.hideModal }
             },
-            [_c("product-form")],
+            [_c("product-form", { on: { success: _vm.success } })],
             1
           ),
           _vm._v(" "),
@@ -40528,9 +40533,7 @@ var RESOURCE = 'products';
         return resolve();
       }).catch(function (error) {
         return reject(error.response);
-      }).finally(function () {
-        return context.commit('PRELOADER', false);
-      }); // STOP PRELOADER
+      }); // .finally(() => context.commit('PRELOADER', false)) // STOP PRELOADER
     });
   }
 });
