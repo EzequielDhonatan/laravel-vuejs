@@ -1,7 +1,7 @@
 <template>
     <div>
         
-        <h1>Listagem da Categoria</h1>
+        <h1 class="text-center">Listagem da Categoria</h1>
 
         <div class="row">
             <div class="col-md-6">

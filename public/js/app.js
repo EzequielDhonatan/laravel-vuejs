@@ -2168,9 +2168,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.loadProducts();
+  },
+  computed: {
+    products: function products() {
+      return this.$store.state.products.items;
+    }
   },
   methods: {
     loadProducts: function loadProducts() {
@@ -20990,7 +21024,7 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h1", [_vm._v("Listagem da Categoria")]),
+    _c("h1", { staticClass: "text-center" }, [_vm._v("Listagem da Categoria")]),
     _vm._v(" "),
     _c("div", { staticClass: "row" }, [
       _c(
@@ -21311,14 +21345,71 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _c("h1", { staticClass: "text-center" }, [_vm._v("Listagem de Produtos")]),
+    _vm._v(" "),
+    _c("div", { staticClass: "row" }, [
+      _c(
+        "div",
+        { staticClass: "col-md-6" },
+        [
+          _c("router-link", { staticClass: "btn btn-success" }, [
+            _vm._v("Cadastrar")
+          ])
+        ],
+        1
+      )
+    ]),
+    _vm._v(" "),
+    _c("table", { staticClass: "table table-dark" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.products.data, function(product, index) {
+          return _c("tr", { key: index }, [
+            _c("td", [_vm._v(_vm._s(product.id))]),
+            _vm._v(" "),
+            _c("td", [_vm._v("...")]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(product.name))]),
+            _vm._v(" "),
+            _vm._m(1, true)
+          ])
+        }),
+        0
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("h1", [_vm._v("Listagem de Produtos")])])
+    return _c("thead", [
+      _c("th", [_vm._v("ID")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("IMAGEM")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("NOME")]),
+      _vm._v(" "),
+      _c("th", { attrs: { width: "200" } }, [_vm._v("AÇÕES")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("a", { staticClass: "btn btn-info", attrs: { href: "" } }, [
+        _vm._v("Editar")
+      ]),
+      _vm._v(" "),
+      _c("a", { staticClass: "btn btn-danger", attrs: { href: "" } }, [
+        _vm._v("Deletar")
+      ])
+    ])
   }
 ]
 render._withStripped = true
