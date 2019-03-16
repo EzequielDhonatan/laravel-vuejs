@@ -2718,6 +2718,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.$store.dispatch('loadProducts', {});
@@ -22811,11 +22814,16 @@ var render = function() {
                   staticClass: "img-list",
                   attrs: {
                     src: ["/storage/products/" + product.image],
-                    alt: "product.name"
+                    alt: product.name
                   }
                 })
               ])
-            : _vm._e(),
+            : _c("div", [
+                _c("img", {
+                  staticClass: "img-list",
+                  attrs: { src: "/images/no-image.jpg", alt: product.name }
+                })
+              ]),
           _vm._v("\n            " + _vm._s(product.name) + "\n        ")
         ])
       }),
