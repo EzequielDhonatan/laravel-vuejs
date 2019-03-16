@@ -2701,6 +2701,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _layouts_PaginationComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../layouts/PaginationComponent */ "./resources/js/components/layouts/PaginationComponent.vue");
 //
 //
 //
@@ -2721,6 +2722,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.$store.dispatch('loadProducts', {});
@@ -2733,6 +2748,17 @@ __webpack_require__.r(__webpack_exports__);
     products: function products() {
       return this.$store.state.products.items;
     }
+  },
+  methods: {
+    loadProducts: function loadProducts() {
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+      this.$store.dispatch('loadProducts', {
+        page: page
+      });
+    }
+  },
+  components: {
+    paginate: _layouts_PaginationComponent__WEBPACK_IMPORTED_MODULE_0__["default"]
   }
 });
 
@@ -22800,36 +22826,47 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
-    _c("h1", [_vm._v("Produtos")]),
-    _vm._v(" "),
-    _c(
-      "div",
-      { staticClass: "row" },
-      _vm._l(_vm.products.data, function(product) {
-        return _c("div", { key: product.id, staticClass: "col-md-3" }, [
-          product.image
-            ? _c("div", [
-                _c("img", {
-                  staticClass: "img-list",
-                  attrs: {
-                    src: ["/storage/products/" + product.image],
-                    alt: product.name
-                  }
-                })
-              ])
-            : _c("div", [
-                _c("img", {
-                  staticClass: "img-list",
-                  attrs: { src: "/images/no-image.jpg", alt: product.name }
-                })
-              ]),
-          _vm._v("\n            " + _vm._s(product.name) + "\n        ")
-        ])
-      }),
-      0
-    )
-  ])
+  return _c(
+    "div",
+    [
+      _c("h1", [_vm._v("Produtos")]),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "row" },
+        _vm._l(_vm.products.data, function(product) {
+          return _c("div", { key: product.id, staticClass: "col-md-3" }, [
+            product.image
+              ? _c("div", [
+                  _c("img", {
+                    staticClass: "img-list",
+                    attrs: {
+                      src: ["/storage/products/" + product.image],
+                      alt: product.name
+                    }
+                  })
+                ])
+              : _c("div", [
+                  _c("img", {
+                    staticClass: "img-list",
+                    attrs: { src: "/images/no-image.jpg", alt: product.name }
+                  })
+                ]),
+            _vm._v("\n\n            " + _vm._s(product.name) + "\n\n        ")
+          ])
+        }),
+        0
+      ),
+      _vm._v(" "),
+      _c("hr"),
+      _vm._v(" "),
+      _c("paginate", {
+        attrs: { pagination: _vm.products },
+        on: { paginate: _vm.loadProducts }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
