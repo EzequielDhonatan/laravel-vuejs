@@ -30,7 +30,7 @@
 
             <thead>
                 <th>ID</th>
-                <th>IMAGEM</th>
+                <th width="500">IMAGEM</th>
                 <th>NOME</th>
                 <th width="200">AÇÕES</th>
             </thead>
@@ -38,7 +38,11 @@
             <tbody>
                 <tr v-for="(product, index) in products.data" :key="index">
                     <td>{{ product.id }}</td>
-                    <td>...</td>
+                    <td>
+                        <div v-if="product.image">
+                            <img :src="[`/storage/products/${product.image}`]" alt="product.name" class="img-list">
+                        </div>
+                    </td>
                     <td>{{ product.name }}</td>
                     <td>
                         <a href="#" class="btn btn-info" @click.prevent="edit(product.id)">Editar</a>
@@ -183,5 +187,7 @@ export default {
 </script>
 
 <style scoped>
-
+.img-list {
+    max-width: 100px;
+}
 </style>
