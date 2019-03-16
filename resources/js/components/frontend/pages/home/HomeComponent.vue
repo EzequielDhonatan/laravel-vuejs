@@ -4,20 +4,13 @@
         <h1>Produtos</h1>
 
         <div class="row">
-
-            <div class="col-md-3" v-for="product in products.data" :key="product.id">
-
-                <div v-if="product.image">
-                    <img :src="[`/storage/products/${product.image}`]" :alt="product.name" class="img-list">
-                </div>
-
-                <div v-else="">
-                    <img src="/images/no-image.jpg" :alt="product.name" class="img-list">
-                </div>
-
-                {{ product.name }}
-
-            </div> <!-- col-md-3 -->
+            
+            <item 
+                v-for="product in products.data" 
+                :key="product.id"
+                :item="product"
+                :path="'products'">
+            </item>
 
         </div> <!-- row -->
 
@@ -32,7 +25,8 @@
 </template>
 
 <script>
-import PaginationComponent from '../../../layouts/PaginationComponent';
+import PaginationComponent from '../../../layouts/PaginationComponent'
+import Item from '../../../layouts/Item'
 
 export default {
     created () {
@@ -53,13 +47,12 @@ export default {
         }
     },
     components: {
-        paginate: PaginationComponent
+        paginate: PaginationComponent, // PAGINATION
+        Item // ITEM
     }
 }
 </script>
 
 <style scoped>
-.img-list {
-    max-width: 100px;
-}
+
 </style>
