@@ -15,10 +15,16 @@
                 <div v-if="errors.name">{{ errors.name[0] }}</div>
                 <input type="text" class="form-control" v-model="product.name" placeholder="Nome do Produto">
             </div>
-
+            
             <div :class="['form-group', {'has-error': errors.image}]">
                 <div v-if="errors.image">{{ errors.image[0] }}</div>
-                <input type="file" class="form-control" @change="onFileChange"> 
+                <div v-if="imagePreview" class="text-center">
+                    <img :src="imagePreview" class="image-preview">
+                    <button @click.prevent="removePreviewImage" class="btn btn-danger">Remover</button>
+                </div>
+                <div v-else>
+                    <input type="file" class="form-control" @change="onFileChange">    
+                </div>
             </div>
 
             <div :class="['form-group', {'has-error': errors.description}]">
@@ -51,7 +57,8 @@ export default {
     data () {
         return {
             errors: {},
-            upload: null
+            upload: null,
+            imagePreview: null,
         }
     },
     computed: {
@@ -99,13 +106,30 @@ export default {
                 return
 
             this.upload = files[0]
+
+            this.previewImage(files[0])
         },
 
-        
+        // PREVIEW IMAGE
+        previewImage (files) {
+            let reader = new FileReader()
+            reader.onload = (e) => {
+                this.imagePreview = e.target.result
+            }
+            reader.readAsDataURL(files)
+        },
+
+        // REMOVE PREVIEW IMAGE
+        removePreviewImage () {
+            this.imagePreview = null
+            this.upload = null
+        }
     }
 }
 </script>
 
 <style scoped>
-
+.image-preview {
+    max-width: 60px;
+}
 </style>
