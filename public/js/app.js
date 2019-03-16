@@ -2946,8 +2946,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['product'],
+  computed: {
+    notCart: function notCart() {
+      return this.$store.state.cart.products.indexOf(this.product) < 0;
+    }
+  },
   methods: {
     addCart: function addCart() {
       this.$store.commit('ADD_PRODUCT_CART', this.product);
@@ -23354,19 +23367,37 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "button",
-      {
-        staticClass: "btn btn-info",
-        on: {
-          click: function($event) {
-            $event.preventDefault()
-            return _vm.addCart($event)
-          }
-        }
-      },
-      [_vm._v("\n        Adicionar Carrinho\n    ")]
-    )
+    _vm.notCart
+      ? _c("div", [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-info",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.addCart($event)
+                }
+              }
+            },
+            [_vm._v("\n            Adicionar Carrinho\n        ")]
+          )
+        ])
+      : _c("div", [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-danger",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.addCart($event)
+                }
+              }
+            },
+            [_vm._v("\n            Remover Carrinho\n        ")]
+          )
+        ])
   ])
 }
 var staticRenderFns = []
