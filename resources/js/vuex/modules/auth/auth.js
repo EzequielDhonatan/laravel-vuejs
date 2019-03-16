@@ -37,7 +37,6 @@ export default {
                                 localStorage.setItem(NAME_TOKEN, token)
                                 window.axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
                             })
-                            .catch(error => console.log(error))
                             .finally(() => context.commit('PRELOADER', false))
         },
 
