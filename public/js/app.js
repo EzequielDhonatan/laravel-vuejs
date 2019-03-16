@@ -2342,6 +2342,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.search = filter;
       this.loadProducts(1);
     },
+    // MODAL
     hideModal: function hideModal() {
       this.showModal = false;
     },
@@ -2349,6 +2350,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.hideModal();
       this.loadProducts(1);
     },
+    // RESETAR DADOS
     reset: function reset() {
       this.product = {
         id: '',
@@ -2356,6 +2358,40 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         description: '',
         category_id: ''
       };
+    },
+    // MODAL DELETAR
+    confirmDelete: function confirmDelete(product) {
+      var _this2 = this;
+
+      this.$snotify.error("Deseja ralmente deletar o produto ".concat(product.name), product.name, {
+        timout: 10000,
+        showProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        buttons: [{
+          text: 'Não',
+          action: function action() {
+            return console.log('Não');
+          }
+        }, {
+          text: 'Sim',
+          action: function action() {
+            return _this2.destroy(product.id);
+          }
+        }]
+      });
+    },
+    // DELETAR
+    destroy: function destroy(id) {
+      var _this3 = this;
+
+      this.$store.dispatch('destroyProduct', id).then(function () {
+        _this3.$snotify.success('Deletado com sucesso!');
+
+        _this3.loadProducts(1);
+      }).catch(function () {
+        return _this3.$snotify.error('Erro ao deletar');
+      });
     }
   },
   components: {
@@ -21920,7 +21956,16 @@ var render = function() {
                 _vm._v(" "),
                 _c(
                   "a",
-                  { staticClass: "btn btn-danger", attrs: { href: "#" } },
+                  {
+                    staticClass: "btn btn-danger",
+                    attrs: { href: "#" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        return _vm.confirmDelete(product)
+                      }
+                    }
+                  },
                   [_vm._v("Deletar")]
                 )
               ])
@@ -40697,6 +40742,18 @@ var RESOURCE = 'products';
       }).catch(function (error) {
         context.commit('PRELOADER', false);
         reject(error.response);
+      }); // .finally(() => context.commit('PRELOADER', false))
+    });
+  },
+  // DELETAR
+  destroyProduct: function destroyProduct(context, id) {
+    context.commit('PRELOADER', true);
+    return new Promise(function (resolve, reject) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.delete("".concat(_config_configs__WEBPACK_IMPORTED_MODULE_1__["URL_BASE"]).concat(RESOURCE, "/").concat(id)).then(function (response) {
+        return resolve();
+      }).catch(function (error) {
+        reject();
+        context.commit('PRELOADER', false);
       }); // .finally(() => context.commit('PRELOADER', false))
     });
   }

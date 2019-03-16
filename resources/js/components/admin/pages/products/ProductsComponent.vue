@@ -42,7 +42,7 @@
                     <td>{{ product.name }}</td>
                     <td>
                         <a href="#" class="btn btn-info" @click.prevent="edit(product.id)">Editar</a>
-                        <a href="#" class="btn btn-danger">Deletar</a>
+                        <a href="#" class="btn btn-danger" @click.prevent="confirmDelete(product)">Deletar</a>
                     </td>
                 </tr>
             </tbody>
@@ -139,6 +139,7 @@ export default {
             this.loadProducts (1)
         },
         
+        // MODAL
         hideModal () {
             this.showModal = false
         },
@@ -149,6 +150,7 @@ export default {
             this.loadProducts(1)
         },
 
+        // RESETAR DADOS
         reset () {
             this.product = {
                 id: '',
@@ -156,6 +158,31 @@ export default {
                 description: '',
                 category_id: '',
             }
+        },
+
+        // MODAL DELETAR
+        confirmDelete (product) {
+            this.$snotify.error(`Deseja ralmente deletar o produto ${product.name}`, product.name, {
+                timout: 10000,
+                showProgressBar: true,
+                closeOnClick: true,
+                pauseOnHover: true,
+                buttons: [
+                    {text: 'Não', action: () => console.log('Não')},
+                    {text: 'Sim', action: () => this.destroy(product.id)}
+                ]
+            })
+        },
+
+        // DELETAR
+        destroy (id) {
+        this.$store.dispatch('destroyProduct', id)
+                        .then(() => {
+                        this.$snotify.success('Deletado com sucesso!')
+
+                        this.loadProducts(1)
+                        })
+                        .catch(() => this.$snotify.error('Erro ao deletar'))
         }
     },
     components: {

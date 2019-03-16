@@ -56,4 +56,20 @@ export default {
                     // .finally(() => context.commit('PRELOADER', false))
         })
     },
+
+    // DELETAR
+    destroyProduct (context, id) {
+        context.commit('PRELOADER', true)
+
+        return new Promise((resolve, reject) => {
+            axios.delete(`${URL_BASE}${RESOURCE}/${id}`)
+                    .then(response => resolve())
+                    .catch(error => {
+                        reject()
+                        
+                        context.commit('PRELOADER', false)
+                    })
+                    // .finally(() => context.commit('PRELOADER', false))
+        })
+    }
 }
