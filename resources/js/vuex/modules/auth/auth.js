@@ -4,13 +4,19 @@ export default {
     state: {
         me: {},
         authenticated: false,
-        urlBack: 'home'
+        urlBack: 'home',
     },
 
     mutations: {
         AUTH_USER_OK (state, user) {
             state.authenticated = true,
             state.me = user
+        },
+
+        AUTH_USER_LOGOUT (state) {
+            state.me = {}
+            state.authenticated = false
+            state.urlBack = 'home'
         },
 
         CHANGE_URL_BACK (state, url) {
@@ -20,22 +26,24 @@ export default {
 
     actions: {
         login (context, params) {
-            context.commit('PRELOADER', true) // STAT PRELOADER
+            context.commit('PRELOADER', true)
 
             return axios.post('/api/auth', params)
                             .then(response => {
                                 context.commit('AUTH_USER_OK', response.data.user)
 
-                                localStorage.setItem(NAME_TOKEN, response.data.token)
+                                const token = response.data.token
 
-
+                                localStorage.setItem(NAME_TOKEN, token)
+                                window.axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
                             })
                             .catch(error => console.log(error))
-                            .finally(() => context.commit('PRELOADER', false)) // STOP PRELOADER
+                            .finally(() => context.commit('PRELOADER', false))
         },
-        
+
+
         checkLogin (context) {
-            context.commit('PRELOADER', true) // STAT PRELOADER
+            context.commit('PRELOADER', true)
 
             return new Promise((resolve, reject) => {
                 const token = localStorage.getItem(NAME_TOKEN)
@@ -49,9 +57,15 @@ export default {
                             resolve()
                         })
                         .catch(() => reject())
-                        .finally(() => context.commit('PRELOADER', false)) // STOP PRELOADER
+                        .finally(() => context.commit('PRELOADER', false))
                 
             })
         },
-    }
+
+        logout (context) {
+            localStorage.removeItem(NAME_TOKEN)
+
+            context.commit('AUTH_USER_LOGOUT')
+        }
+    },
 }

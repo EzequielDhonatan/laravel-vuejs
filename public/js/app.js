@@ -2691,6 +2691,11 @@ __webpack_require__.r(__webpack_exports__);
     me: function me() {
       return this.$store.state.auth.me;
     }
+  },
+  methods: {
+    logout: function logout() {
+      this.$store.dispatch('logout');
+    }
   }
 });
 
@@ -23274,10 +23279,21 @@ var render = function() {
                 },
                 [
                   _vm._v(
-                    "\n                Olá, " +
-                      _vm._s(_vm.me.name) +
-                      "!\n            "
-                  )
+                    "\n                Olá " + _vm._s(_vm.me.name) + "! ("
+                  ),
+                  _c(
+                    "a",
+                    {
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.logout($event)
+                        }
+                      }
+                    },
+                    [_vm._v("Sair")]
+                  ),
+                  _vm._v(")\n            ")
                 ]
               )
             ],
@@ -43264,26 +43280,31 @@ __webpack_require__.r(__webpack_exports__);
     AUTH_USER_OK: function AUTH_USER_OK(state, user) {
       state.authenticated = true, state.me = user;
     },
+    AUTH_USER_LOGOUT: function AUTH_USER_LOGOUT(state) {
+      state.me = {};
+      state.authenticated = false;
+      state.urlBack = 'home';
+    },
     CHANGE_URL_BACK: function CHANGE_URL_BACK(state, url) {
       state.urlBack = url;
     }
   },
   actions: {
     login: function login(context, params) {
-      context.commit('PRELOADER', true); // STAT PRELOADER
-
+      context.commit('PRELOADER', true);
       return axios.post('/api/auth', params).then(function (response) {
         context.commit('AUTH_USER_OK', response.data.user);
-        localStorage.setItem(_config_configs__WEBPACK_IMPORTED_MODULE_0__["NAME_TOKEN"], response.data.token);
+        var token = response.data.token;
+        localStorage.setItem(_config_configs__WEBPACK_IMPORTED_MODULE_0__["NAME_TOKEN"], token);
+        window.axios.defaults.headers.common['Authorization'] = "Bearer ".concat(token);
       }).catch(function (error) {
         return console.log(error);
       }).finally(function () {
         return context.commit('PRELOADER', false);
-      }); // STOP PRELOADER
+      });
     },
     checkLogin: function checkLogin(context) {
-      context.commit('PRELOADER', true); // STAT PRELOADER
-
+      context.commit('PRELOADER', true);
       return new Promise(function (resolve, reject) {
         var token = localStorage.getItem(_config_configs__WEBPACK_IMPORTED_MODULE_0__["NAME_TOKEN"]);
         if (!token) return reject();
@@ -43294,8 +43315,12 @@ __webpack_require__.r(__webpack_exports__);
           return reject();
         }).finally(function () {
           return context.commit('PRELOADER', false);
-        }); // STOP PRELOADER
+        });
       });
+    },
+    logout: function logout(context) {
+      localStorage.removeItem(_config_configs__WEBPACK_IMPORTED_MODULE_0__["NAME_TOKEN"]);
+      context.commit('AUTH_USER_LOGOUT');
     }
   }
 });
