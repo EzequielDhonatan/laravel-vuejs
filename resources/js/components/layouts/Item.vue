@@ -1,15 +1,16 @@
 <template>
     <div class="col-md-3">
-        
-        <div v-if="item.image">
-            <img :src="[`/storage/${path}/${item.image}`]" :alt="item.name" class="img-list">
-        </div>
+        <router-link :to="{name: 'product.detail', params: {id: item.id}}">
+            <div v-if="item.image">
+                <img :src="[`/storage/${path}/${item.image}`]" :alt="item.name" class="img-list">
+            </div>
 
-        <div v-else="">
-            <img src="/images/no-image.jpg" :alt="item.name" class="img-list">
-        </div>
+            <div v-else="">
+                <img src="/images/no-image.jpg" :alt="item.name" class="img-list">
+            </div>
 
-        {{ item.name }}
+            {{ item.name }}
+        </router-link>
 
     </div> <!-- col-md-12 -->
 </template>

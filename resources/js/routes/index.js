@@ -16,6 +16,7 @@ import ProductsComponent from '../components/admin/pages/products/ProductsCompon
 import SiteComponent from '../components/frontend/SiteComponent' // LAYOUT
 import HomeComponent from '../components/frontend/pages/home/HomeComponent' // HOME
 import ContactComponent from '../components/frontend/pages/contact/ContactComponent' // CONTACT
+import ProductDetail from '../components/frontend/pages/product/ProductDetail' // PRODUCT DETAIL
 
 Vue.use(VueRouter)
 
@@ -25,8 +26,9 @@ const routes = [
         path: '/', 
         component: SiteComponent,
         children: [
-            {path: '', component: HomeComponent, name: 'home'},
-            {path: 'contact', component: ContactComponent, name: 'contact'},
+            {path: 'produto/:id', component: ProductDetail, name: 'product.detail'}, // PRODUCT DETAIL
+            {path: '', component: HomeComponent, name: 'home'}, // HOME
+            {path: 'contact', component: ContactComponent, name: 'contact'}, // CONTACT
         ]
     },
     
