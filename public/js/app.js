@@ -2964,6 +2964,9 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     addCart: function addCart() {
       this.$store.commit('ADD_PRODUCT_CART', this.product);
+    },
+    removeCart: function removeCart() {
+      this.$store.commit('REMOVE_PRODUCT_CART', this.product);
     }
   }
 });
@@ -23391,7 +23394,7 @@ var render = function() {
               on: {
                 click: function($event) {
                   $event.preventDefault()
-                  return _vm.addCart($event)
+                  return _vm.removeCart($event)
                 }
               }
             },
@@ -42739,6 +42742,12 @@ __webpack_require__.r(__webpack_exports__);
   mutations: {
     ADD_PRODUCT_CART: function ADD_PRODUCT_CART(state, product) {
       state.products.push(product);
+    },
+    REMOVE_PRODUCT_CART: function REMOVE_PRODUCT_CART(state, product) {
+      var index = state.products.findIndex(function (prod) {
+        return prod.id === product.id;
+      });
+      state.products.splice(index, 1);
     }
   }
 });
