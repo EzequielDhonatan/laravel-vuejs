@@ -2677,10 +2677,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     cart: function cart() {
       return this.$store.state.cart.products;
+    },
+    me: function me() {
+      return this.$store.state.auth.me;
     }
   }
 });
@@ -23252,18 +23261,40 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _c(
-        "li",
-        { staticClass: "nav-item" },
-        [
-          _c(
-            "router-link",
-            { staticClass: "nav-link", attrs: { to: { name: "login" } } },
-            [_vm._v("LOGIN")]
+      _vm.me.name
+        ? _c(
+            "li",
+            { staticClass: "nav-item" },
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "nav-link",
+                  attrs: { to: { name: "admin.dashboard" } }
+                },
+                [
+                  _vm._v(
+                    "\n                Olá, " +
+                      _vm._s(_vm.me.name) +
+                      "!\n            "
+                  )
+                ]
+              )
+            ],
+            1
           )
-        ],
-        1
-      )
+        : _c(
+            "li",
+            { staticClass: "nav-item" },
+            [
+              _c(
+                "router-link",
+                { staticClass: "nav-link", attrs: { to: { name: "login" } } },
+                [_vm._v("LOGIN")]
+              )
+            ],
+            1
+          )
     ])
   ])
 }
@@ -43116,7 +43147,10 @@ var routes = [// FRONTEND
   children: [{
     path: 'login',
     component: _components_frontend_pages_login_LoginComponent__WEBPACK_IMPORTED_MODULE_14__["default"],
-    name: 'login'
+    name: 'login',
+    meta: {
+      auth: false
+    }
   }, // LOGIN
   {
     path: 'cart',
@@ -43194,6 +43228,12 @@ router.beforeEach(function (to, from, next) {
     _vuex_store__WEBPACK_IMPORTED_MODULE_2__["default"].commit('CHANGE_URL_BACK', to.name);
     return router.push({
       name: 'login'
+    });
+  }
+
+  if (to.meta.hasOwnProperty('auth') && !to.meta.auth && _vuex_store__WEBPACK_IMPORTED_MODULE_2__["default"].state.auth.authenticated) {
+    return router.push({
+      name: 'admin.dashboard'
     });
   }
 

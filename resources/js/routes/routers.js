@@ -29,7 +29,7 @@ const routes = [
         path: '/', 
         component: SiteComponent,
         children: [
-            {path: 'login', component: LoginComponent, name: 'login'}, // LOGIN
+            {path: 'login', component: LoginComponent, name: 'login', meta: {auth: false}}, // LOGIN
             {path: 'cart', component: CartComponent, name: 'cart'}, // CART
             {path: 'produto/:id', component: ProductDetail, name: 'product.detail', props: true}, // PRODUCT DETAIL
             {path: 'contact', component: ContactComponent, name: 'contact'}, // CONTACT
@@ -72,6 +72,10 @@ router.beforeEach((to, from, next) => {
         store.commit('CHANGE_URL_BACK', to.name)
 
         return router.push({name: 'login'})
+    }
+
+    if (to.meta.hasOwnProperty('auth') && !to.meta.auth && store.state.auth.authenticated) {
+        return router.push({name: 'admin.dashboard'})
     }
 
     next()

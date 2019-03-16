@@ -15,7 +15,13 @@
                 <router-link class="nav-link" :to="{name: 'cart'}">CARRINHO ({{ cart.length }})</router-link>
             </li>
 
-            <li class="nav-item">
+            <li class="nav-item" v-if="me.name">
+                <router-link class="nav-link" :to="{name: 'admin.dashboard'}">
+                    Olá, {{ me.name }}!
+                </router-link>
+            </li>
+
+            <li class="nav-item" v-else>
                 <router-link class="nav-link" :to="{name: 'login'}">LOGIN</router-link>
             </li>
 
@@ -29,6 +35,10 @@ export default {
     computed: {
         cart () {
             return this.$store.state.cart.products
+        },
+
+        me () {
+            return this.$store.state.auth.me
         }
     }
 }
