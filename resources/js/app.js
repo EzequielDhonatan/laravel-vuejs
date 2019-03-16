@@ -5,7 +5,7 @@ window.Vue = require('vue')
 import SNotify from 'vue-snotify'
 
 // Vue Router
-import router from './routes/index'
+import router from './routes/routers'
 
 // Vuex
 import store from './vuex/store'
@@ -37,4 +37,4 @@ store.dispatch('loadCategories')
 
 
 store.dispatch('checkLogin')
-        .then(() => router.push({name: 'admin.dashboard'}))
+        .then(() => router.push({name: store.state.auth.urlBack}))

@@ -63,10 +63,14 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.meta.auth && !store.state.auth.authenticated) {
+        store.commit('CHANGE_URL_BACK', to.name)
+
         return router.push({name: 'login'})
     }
 
     if (to.matched.some(record => record.meta.auth) && !store.state.auth.authenticated) {
+        store.commit('CHANGE_URL_BACK', to.name)
+
         return router.push({name: 'login'})
     }
 

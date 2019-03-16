@@ -4,6 +4,7 @@ export default {
     state: {
         me: {},
         authenticated: false,
+        urlBack: 'home'
     },
 
     mutations: {
@@ -11,6 +12,10 @@ export default {
             state.authenticated = true,
             state.me = user
         },
+
+        CHANGE_URL_BACK (state, url) {
+            state.urlBack = url
+        }
     },
 
     actions: {
@@ -26,11 +31,11 @@ export default {
 
                             })
                             .catch(error => console.log(error))
-                            .finally(() => context.commit('PRELOADER', false))
+                            .finally(() => context.commit('PRELOADER', false)) // STOP PRELOADER
         },
         
         checkLogin (context) {
-            context.commit('PRELOADER', true)
+            context.commit('PRELOADER', true) // STAT PRELOADER
 
             return new Promise((resolve, reject) => {
                 const token = localStorage.getItem(NAME_TOKEN)
@@ -44,7 +49,7 @@ export default {
                             resolve()
                         })
                         .catch(() => reject())
-                        .finally(() => context.commit('PRELOADER', false))
+                        .finally(() => context.commit('PRELOADER', false)) // STOP PRELOADER
                 
             })
         },

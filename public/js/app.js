@@ -41128,7 +41128,7 @@ module.exports = g;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vue_snotify__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue-snotify */ "./node_modules/vue-snotify/vue-snotify.esm.js");
-/* harmony import */ var _routes_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./routes/index */ "./resources/js/routes/index.js");
+/* harmony import */ var _routes_routers__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./routes/routers */ "./resources/js/routes/routers.js");
 /* harmony import */ var _vuex_store__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./vuex/store */ "./resources/js/vuex/store.js");
 /* harmony import */ var vodal__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vodal */ "./node_modules/vodal/dist/index.js");
 /* harmony import */ var vodal__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vodal__WEBPACK_IMPORTED_MODULE_3__);
@@ -41161,15 +41161,15 @@ Vue.component('admin-component', __webpack_require__(/*! ./components/admin/Admi
 Vue.component('preloader-component', __webpack_require__(/*! ./components/layouts/PreloaderComponent */ "./resources/js/components/layouts/PreloaderComponent.vue").default); // PRELOADER
 
 var app = new Vue({
-  router: _routes_index__WEBPACK_IMPORTED_MODULE_1__["default"],
+  router: _routes_routers__WEBPACK_IMPORTED_MODULE_1__["default"],
   store: _vuex_store__WEBPACK_IMPORTED_MODULE_2__["default"],
   el: '#app'
 }); // LOAD CATEGORIES
 
 _vuex_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch('loadCategories');
 _vuex_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch('checkLogin').then(function () {
-  return _routes_index__WEBPACK_IMPORTED_MODULE_1__["default"].push({
-    name: 'admin.dashboard'
+  return _routes_routers__WEBPACK_IMPORTED_MODULE_1__["default"].push({
+    name: _vuex_store__WEBPACK_IMPORTED_MODULE_2__["default"].state.auth.urlBack
   });
 });
 
@@ -43053,10 +43053,10 @@ var NAME_TOKEN = 'TOKEN_AUTH'; // TOKEN AUTH
 
 /***/ }),
 
-/***/ "./resources/js/routes/index.js":
-/*!**************************************!*\
-  !*** ./resources/js/routes/index.js ***!
-  \**************************************/
+/***/ "./resources/js/routes/routers.js":
+/*!****************************************!*\
+  !*** ./resources/js/routes/routers.js ***!
+  \****************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -43182,6 +43182,7 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 });
 router.beforeEach(function (to, from, next) {
   if (to.meta.auth && !_vuex_store__WEBPACK_IMPORTED_MODULE_2__["default"].state.auth.authenticated) {
+    _vuex_store__WEBPACK_IMPORTED_MODULE_2__["default"].commit('CHANGE_URL_BACK', to.name);
     return router.push({
       name: 'login'
     });
@@ -43190,6 +43191,7 @@ router.beforeEach(function (to, from, next) {
   if (to.matched.some(function (record) {
     return record.meta.auth;
   }) && !_vuex_store__WEBPACK_IMPORTED_MODULE_2__["default"].state.auth.authenticated) {
+    _vuex_store__WEBPACK_IMPORTED_MODULE_2__["default"].commit('CHANGE_URL_BACK', to.name);
     return router.push({
       name: 'login'
     });
@@ -43215,11 +43217,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: {
     me: {},
-    authenticated: false
+    authenticated: false,
+    urlBack: 'home'
   },
   mutations: {
     AUTH_USER_OK: function AUTH_USER_OK(state, user) {
       state.authenticated = true, state.me = user;
+    },
+    CHANGE_URL_BACK: function CHANGE_URL_BACK(state, url) {
+      state.urlBack = url;
     }
   },
   actions: {
@@ -43233,10 +43239,11 @@ __webpack_require__.r(__webpack_exports__);
         return console.log(error);
       }).finally(function () {
         return context.commit('PRELOADER', false);
-      });
+      }); // STOP PRELOADER
     },
     checkLogin: function checkLogin(context) {
-      context.commit('PRELOADER', true);
+      context.commit('PRELOADER', true); // STAT PRELOADER
+
       return new Promise(function (resolve, reject) {
         var token = localStorage.getItem(_config_configs__WEBPACK_IMPORTED_MODULE_0__["NAME_TOKEN"]);
         if (!token) return reject();
@@ -43247,7 +43254,7 @@ __webpack_require__.r(__webpack_exports__);
           return reject();
         }).finally(function () {
           return context.commit('PRELOADER', false);
-        });
+        }); // STOP PRELOADER
       });
     }
   }
