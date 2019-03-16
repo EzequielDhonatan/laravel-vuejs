@@ -9,15 +9,23 @@
                 <img src="/images/no-image.jpg" :alt="item.name" class="img-list">
             </div>
 
-            {{ item.name }}
+            <p>{{ item.name }}</p>
         </router-link>
+
+        <button-cart :product="item"></button-cart>
 
     </div> <!-- col-md-12 -->
 </template>
 
 <script>
+import ButtonCart from './ButtonCart';
+
 export default {
-    props: ['item', 'path']
+    props: ['item', 'path'],
+
+    components: {
+        ButtonCart // BUTTON CART
+    }
 }
 </script>
 
