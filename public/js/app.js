@@ -43127,6 +43127,10 @@ var routes = [// FRONTEND
 {
   path: '/admin',
   component: _components_admin_AdminComponent__WEBPACK_IMPORTED_MODULE_3__["default"],
+  // meta: {auth: true, admin: true}, // ACL
+  meta: {
+    auth: true
+  },
   children: [// ADMIN
   {
     path: '',
@@ -43154,10 +43158,7 @@ var routes = [// FRONTEND
   {
     path: 'products',
     component: _components_admin_pages_products_ProductsComponent__WEBPACK_IMPORTED_MODULE_8__["default"],
-    name: 'admin.products',
-    meta: {
-      auth: true
-    }
+    name: 'admin.products'
   }]
 }];
 var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
@@ -43165,6 +43166,14 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 });
 router.beforeEach(function (to, from, next) {
   if (to.meta.auth && !_vuex_store__WEBPACK_IMPORTED_MODULE_2__["default"].state.auth.authenticated) {
+    return router.push({
+      name: 'login'
+    });
+  }
+
+  if (to.matched.some(function (record) {
+    return record.meta.auth;
+  }) && !_vuex_store__WEBPACK_IMPORTED_MODULE_2__["default"].state.auth.authenticated) {
     return router.push({
       name: 'login'
     });

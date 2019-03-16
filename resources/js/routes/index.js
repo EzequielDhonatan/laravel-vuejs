@@ -40,6 +40,8 @@ const routes = [
     // BACKEND
     {path: '/admin', 
         component: AdminComponent,
+        // meta: {auth: true, admin: true}, // ACL
+        meta: {auth: true},
         children: [
             // ADMIN
             {path: '', component: DashboardComponent, name: 'admin.dashboard'}, // DASHABOARD
@@ -50,7 +52,7 @@ const routes = [
             {path: 'categories/:id/edit', component: EditCategoryComponent, name: 'admin.categories.edit', props: true}, // EDIT
 
             // PRODUCTS
-            {path: 'products', component: ProductsComponent, name: 'admin.products', meta: {auth: true}}, // HOME
+            {path: 'products', component: ProductsComponent, name: 'admin.products'}, // HOME
         ]
     }
 ]
@@ -61,6 +63,10 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
     if (to.meta.auth && !store.state.auth.authenticated) {
+        return router.push({name: 'login'})
+    }
+
+    if (to.matched.some(record => record.meta.auth) && !store.state.auth.authenticated) {
         return router.push({name: 'login'})
     }
 
