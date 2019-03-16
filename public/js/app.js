@@ -40914,10 +40914,11 @@ var CONFIGS = {
     });
   },
   // EDITAR / ATUALIZAR
-  updateProduct: function updateProduct(context, params) {
+  updateProduct: function updateProduct(context, formData) {
     context.commit('PRELOADER', true);
+    formData.append('_method', 'PUT');
     return new Promise(function (resolve, reject) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.put("".concat(_config_configs__WEBPACK_IMPORTED_MODULE_1__["URL_BASE"]).concat(RESOURCE, "/").concat(params.id), params).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("".concat(_config_configs__WEBPACK_IMPORTED_MODULE_1__["URL_BASE"]).concat(RESOURCE, "/").concat(formData.get('id')), formData).then(function (response) {
         return resolve();
       }).catch(function (error) {
         context.commit('PRELOADER', false);
