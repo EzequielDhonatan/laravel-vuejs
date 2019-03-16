@@ -2709,7 +2709,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  created: function created() {
+    this.$store.dispatch('loadProducts', {});
+    /*
+    if (this.products.data.length == 0)
+        this.$store.dispatch('loadProducts', {})
+    */
+  },
+  computed: {
+    products: function products() {
+      return this.$store.state.products.items;
+    }
+  }
+});
 
 /***/ }),
 
@@ -22659,7 +22672,7 @@ var render = function() {
           _c(
             "router-link",
             { staticClass: "nav-link", attrs: { to: { name: "home" } } },
-            [_vm._v("Home")]
+            [_vm._v("HOME")]
           )
         ],
         1
@@ -22672,7 +22685,7 @@ var render = function() {
           _c(
             "router-link",
             { staticClass: "nav-link", attrs: { to: { name: "contact" } } },
-            [_vm._v("Contact")]
+            [_vm._v("CONTATO")]
           )
         ],
         1
