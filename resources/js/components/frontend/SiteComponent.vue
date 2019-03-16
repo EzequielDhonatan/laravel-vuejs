@@ -1,18 +1,24 @@
 <template>
     <div>
         
-        # HEADER
+        <header-site></header-site>
 
         <router-view></router-view>
 
-        # FOOTER
+        <footer-site></footer-site>
 
     </div>
 </template>
 
 <script>
+import SiteHeaderComponent from './SiteHeaderComponent' // HEADER
+import SiteFooterComponent from './SiteFooterComponent' // FOOTER
+
 export default {
-    
+    components: {
+        headerSite: SiteHeaderComponent, // HEADER
+        footerSite: SiteFooterComponent // FOOTER
+    }
 }
 </script>
 
