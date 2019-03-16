@@ -2547,6 +2547,8 @@ __webpack_require__.r(__webpack_exports__);
     // RESET ERRORS
     reset: function reset() {
       this.errors = {};
+      this.imagePreview = null;
+      this.upload = null;
     },
     // CARREGA IMAGE
     onFileChange: function onFileChange(e) {

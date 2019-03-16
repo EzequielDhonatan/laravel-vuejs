@@ -97,6 +97,9 @@ export default {
         // RESET ERRORS
         reset () {
             this.errors = {}
+
+            this.imagePreview = null
+            this.upload = null
         },
 
         // CARREGA IMAGE
