@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../vuex/store'
 
 import AdminComponent from '../components/admin/AdminComponent'; // ADMIN
 import DashboardComponent from '../components/admin/pages/dashboard/DashboardComponent'; // DASHBOARD
@@ -49,13 +50,21 @@ const routes = [
             {path: 'categories/:id/edit', component: EditCategoryComponent, name: 'admin.categories.edit', props: true}, // EDIT
 
             // PRODUCTS
-            {path: 'products', component: ProductsComponent, name: 'admin.products'}, // HOME
+            {path: 'products', component: ProductsComponent, name: 'admin.products', meta: {auth: true}}, // HOME
         ]
     }
 ]
 
 const router = new VueRouter({
     routes
+})
+
+router.beforeEach((to, from, next) => {
+    if (to.meta.auth && !store.state.auth.authenticated) {
+        return router.push({name: 'login'})
+    }
+
+    next()
 })
 
 export default router
