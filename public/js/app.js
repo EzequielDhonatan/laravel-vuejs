@@ -1799,6 +1799,60 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/layouts/ButtonDestroyComponent.vue?vue&type=script&lang=js&":
+/*!***********************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/layouts/ButtonDestroyComponent.vue?vue&type=script&lang=js& ***!
+  \***********************************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    item: {
+      require: true,
+      type: Object
+    }
+  },
+  methods: {
+    // MODAL DELETAR
+    confirmDelete: function confirmDelete(item) {
+      var _this = this;
+
+      this.$snotify.error("Deseja ralmente deletar o produto ".concat(item.name), 'Confirmar?', {
+        timout: 10000,
+        showProgressBar: true,
+        closeOnClick: true,
+        pauseOnHover: true,
+        buttons: [{
+          text: 'Não',
+          action: function action() {
+            return console.log('Não');
+          }
+        }, {
+          text: 'Sim',
+          action: function action() {
+            return _this.$emit('destroy', item.id);
+          }
+        }]
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/layouts/SearchComponent.vue?vue&type=script&lang=js&":
 /*!****************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/layouts/SearchComponent.vue?vue&type=script&lang=js& ***!
@@ -2205,6 +2259,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layouts_PaginationComponent__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../layouts/PaginationComponent */ "./resources/js/components/layouts/PaginationComponent.vue");
 /* harmony import */ var _layouts_SearchComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../layouts/SearchComponent */ "./resources/js/components/admin/layouts/SearchComponent.vue");
 /* harmony import */ var _partials_ProductForm__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./partials/ProductForm */ "./resources/js/components/admin/pages/products/partials/ProductForm.vue");
+/* harmony import */ var _layouts_ButtonDestroyComponent__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../layouts/ButtonDestroyComponent */ "./resources/js/components/admin/layouts/ButtonDestroyComponent.vue");
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -2284,6 +2339,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
  // PRODUCT FORM
 
+ // BUTTON | MODAL DESTROY
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     this.loadProducts(1);
@@ -2359,38 +2416,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         category_id: ''
       };
     },
-    // MODAL DELETAR
-    confirmDelete: function confirmDelete(product) {
-      var _this2 = this;
-
-      this.$snotify.error("Deseja ralmente deletar o produto ".concat(product.name), product.name, {
-        timout: 10000,
-        showProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: true,
-        buttons: [{
-          text: 'Não',
-          action: function action() {
-            return console.log('Não');
-          }
-        }, {
-          text: 'Sim',
-          action: function action() {
-            return _this2.destroy(product.id);
-          }
-        }]
-      });
-    },
     // DELETAR
     destroy: function destroy(id) {
-      var _this3 = this;
+      var _this2 = this;
 
       this.$store.dispatch('destroyProduct', id).then(function () {
-        _this3.$snotify.success('Deletado com sucesso!');
+        _this2.$snotify.success('Deletado com sucesso!');
 
-        _this3.loadProducts(1);
+        _this2.loadProducts(1);
       }).catch(function () {
-        return _this3.$snotify.error('Erro ao deletar');
+        return _this2.$snotify.error('Erro ao deletar');
       });
     }
   },
@@ -2401,7 +2436,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     // SEARCH,
     Vodal: vodal__WEBPACK_IMPORTED_MODULE_0___default.a,
     // VODAL
-    ProductForm: _partials_ProductForm__WEBPACK_IMPORTED_MODULE_3__["default"] // PRODUCT FORM
+    ProductForm: _partials_ProductForm__WEBPACK_IMPORTED_MODULE_3__["default"],
+    // PRODUCT FORM
+    destroy: _layouts_ButtonDestroyComponent__WEBPACK_IMPORTED_MODULE_4__["default"] // BUTTON | MODAL DESTROY
 
   }
 });
@@ -21427,6 +21464,45 @@ render._withStripped = true
 
 /***/ }),
 
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/layouts/ButtonDestroyComponent.vue?vue&type=template&id=14a1a034&scoped=true&":
+/*!***************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/layouts/ButtonDestroyComponent.vue?vue&type=template&id=14a1a034&scoped=true& ***!
+  \***************************************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c(
+      "a",
+      {
+        staticClass: "btn btn-danger",
+        attrs: { href: "#" },
+        on: {
+          click: function($event) {
+            $event.preventDefault()
+            return _vm.confirmDelete(_vm.item)
+          }
+        }
+      },
+      [_vm._v("\n        Deletar\n    ")]
+    )
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/layouts/SearchComponent.vue?vue&type=template&id=b6a077d8&scoped=true&":
 /*!********************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/admin/layouts/SearchComponent.vue?vue&type=template&id=b6a077d8&scoped=true& ***!
@@ -21938,37 +22014,31 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(product.name))]),
               _vm._v(" "),
-              _c("td", [
-                _c(
-                  "a",
-                  {
-                    staticClass: "btn btn-info",
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        return _vm.edit(product.id)
+              _c(
+                "td",
+                [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn-info",
+                      attrs: { href: "#" },
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          return _vm.edit(product.id)
+                        }
                       }
-                    }
-                  },
-                  [_vm._v("Editar")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "a",
-                  {
-                    staticClass: "btn btn-danger",
-                    attrs: { href: "#" },
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        return _vm.confirmDelete(product)
-                      }
-                    }
-                  },
-                  [_vm._v("Deletar")]
-                )
-              ])
+                    },
+                    [_vm._v("Editar")]
+                  ),
+                  _vm._v(" "),
+                  _c("destroy", {
+                    attrs: { item: product },
+                    on: { destroy: _vm.destroy }
+                  })
+                ],
+                1
+              )
             ])
           }),
           0
@@ -39638,6 +39708,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminComponent_vue_vue_type_template_id_2073db19___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_AdminComponent_vue_vue_type_template_id_2073db19___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/layouts/ButtonDestroyComponent.vue":
+/*!**************************************************************************!*\
+  !*** ./resources/js/components/admin/layouts/ButtonDestroyComponent.vue ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _ButtonDestroyComponent_vue_vue_type_template_id_14a1a034_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ButtonDestroyComponent.vue?vue&type=template&id=14a1a034&scoped=true& */ "./resources/js/components/admin/layouts/ButtonDestroyComponent.vue?vue&type=template&id=14a1a034&scoped=true&");
+/* harmony import */ var _ButtonDestroyComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ButtonDestroyComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/layouts/ButtonDestroyComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _ButtonDestroyComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _ButtonDestroyComponent_vue_vue_type_template_id_14a1a034_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _ButtonDestroyComponent_vue_vue_type_template_id_14a1a034_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "14a1a034",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/admin/layouts/ButtonDestroyComponent.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/layouts/ButtonDestroyComponent.vue?vue&type=script&lang=js&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/admin/layouts/ButtonDestroyComponent.vue?vue&type=script&lang=js& ***!
+  \***************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonDestroyComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ButtonDestroyComponent.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/layouts/ButtonDestroyComponent.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonDestroyComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/admin/layouts/ButtonDestroyComponent.vue?vue&type=template&id=14a1a034&scoped=true&":
+/*!*********************************************************************************************************************!*\
+  !*** ./resources/js/components/admin/layouts/ButtonDestroyComponent.vue?vue&type=template&id=14a1a034&scoped=true& ***!
+  \*********************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonDestroyComponent_vue_vue_type_template_id_14a1a034_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./ButtonDestroyComponent.vue?vue&type=template&id=14a1a034&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/admin/layouts/ButtonDestroyComponent.vue?vue&type=template&id=14a1a034&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonDestroyComponent_vue_vue_type_template_id_14a1a034_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ButtonDestroyComponent_vue_vue_type_template_id_14a1a034_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 

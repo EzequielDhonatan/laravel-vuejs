@@ -42,7 +42,7 @@
                     <td>{{ product.name }}</td>
                     <td>
                         <a href="#" class="btn btn-info" @click.prevent="edit(product.id)">Editar</a>
-                        <a href="#" class="btn btn-danger" @click.prevent="confirmDelete(product)">Deletar</a>
+                        <destroy :item="product" @destroy="destroy"/>
                     </td>
                 </tr>
             </tbody>
@@ -71,6 +71,7 @@ import Vodal from 'vodal' // VODAL
 import PaginationComponent from '../../../layouts/PaginationComponent' // PAGINATION
 import SearchComponent from '../../layouts/SearchComponent' // SEARCH
 import ProductForm from './partials/ProductForm' // PRODUCT FORM
+import ButtonDestroyComponent from '../../layouts/ButtonDestroyComponent' // BUTTON | MODAL DESTROY
 
 export default {
     created () {
@@ -160,23 +161,9 @@ export default {
             }
         },
 
-        // MODAL DELETAR
-        confirmDelete (product) {
-            this.$snotify.error(`Deseja ralmente deletar o produto ${product.name}`, product.name, {
-                timout: 10000,
-                showProgressBar: true,
-                closeOnClick: true,
-                pauseOnHover: true,
-                buttons: [
-                    {text: 'Não', action: () => console.log('Não')},
-                    {text: 'Sim', action: () => this.destroy(product.id)}
-                ]
-            })
-        },
-
         // DELETAR
         destroy (id) {
-        this.$store.dispatch('destroyProduct', id)
+            this.$store.dispatch('destroyProduct', id)
                         .then(() => {
                         this.$snotify.success('Deletado com sucesso!')
 
@@ -189,7 +176,8 @@ export default {
         pagination: PaginationComponent, // PAGINATION
         search: SearchComponent, // SEARCH,
         Vodal, // VODAL
-        ProductForm // PRODUCT FORM
+        ProductForm, // PRODUCT FORM
+        destroy: ButtonDestroyComponent // BUTTON | MODAL DESTROY
     }
 }
 </script>
