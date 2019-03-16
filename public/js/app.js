@@ -1789,10 +1789,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   computed: {
     totalCategories: function totalCategories() {
       return this.$store.state.categories.items.data.length;
+    },
+    me: function me() {
+      return this.$store.state.auth.me;
+    }
+  },
+  methods: {
+    logout: function logout() {
+      this.$store.dispatch('logout');
+      this.$router.push({
+        name: 'login'
+      });
     }
   }
 });
@@ -22304,7 +22321,27 @@ var render = function() {
           )
         ],
         1
-      )
+      ),
+      _vm._v(" "),
+      _c("li", [
+        _c("a", { staticClass: "nav-link", attrs: { href: "#" } }, [
+          _vm._v("\n                " + _vm._s(_vm.me.name) + " ("),
+          _c(
+            "a",
+            {
+              attrs: { href: "#" },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  return _vm.logout($event)
+                }
+              }
+            },
+            [_vm._v("Sair")]
+          ),
+          _vm._v(")\n            ")
+        ])
+      ])
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "container" }, [_c("router-view")], 1)
