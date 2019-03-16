@@ -2779,7 +2779,38 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["id"],
+  created: function created() {
+    this.loadProduct();
+  },
+  data: function data() {
+    return {
+      product: {}
+    };
+  },
+  methods: {
+    loadProduct: function loadProduct() {
+      var _this = this;
+
+      this.$store.dispatch("loadProduct", this.id).then(function (product) {
+        return _this.product = product;
+      });
+    }
+  }
+});
 
 /***/ }),
 
@@ -22926,7 +22957,30 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [_vm._v("\n    \n    Detalhes do Produto\n\n")])
+  return _c("div", [
+    _c("h1", [_vm._v(_vm._s(_vm.product.name))]),
+    _vm._v(" "),
+    _vm.product.image
+      ? _c("div", [
+          _c("img", {
+            staticClass: "img-list",
+            attrs: {
+              src: ["/storage/products/" + _vm.product.image],
+              alt: _vm.product.name
+            }
+          })
+        ])
+      : _c("div", [
+          _c("img", {
+            staticClass: "img-list",
+            attrs: { src: "/images/no-image.jpg", alt: _vm.product.name }
+          })
+        ]),
+    _vm._v(" "),
+    _c("div", [
+      _vm._v("\n        " + _vm._s(_vm.product.description) + "\n    ")
+    ])
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -41961,27 +42015,30 @@ var routes = [// FRONTEND
   children: [{
     path: 'produto/:id',
     component: _components_frontend_pages_product_ProductDetail__WEBPACK_IMPORTED_MODULE_11__["default"],
-    name: 'product.detail'
+    name: 'product.detail',
+    props: true
   }, // PRODUCT DETAIL
-  {
-    path: '',
-    component: _components_frontend_pages_home_HomeComponent__WEBPACK_IMPORTED_MODULE_9__["default"],
-    name: 'home'
-  }, // HOME
   {
     path: 'contact',
     component: _components_frontend_pages_contact_ContactComponent__WEBPACK_IMPORTED_MODULE_10__["default"],
     name: 'contact'
+  }, // CONTACT
+  {
+    path: '',
+    component: _components_frontend_pages_home_HomeComponent__WEBPACK_IMPORTED_MODULE_9__["default"],
+    name: 'home'
   }]
 }, // BACKEND
 {
   path: '/admin',
   component: _components_admin_AdminComponent__WEBPACK_IMPORTED_MODULE_2__["default"],
-  children: [{
+  children: [// ADMIN
+  {
     path: '',
     component: _components_admin_pages_dashboard_DashboardComponent__WEBPACK_IMPORTED_MODULE_3__["default"],
     name: 'admin.dashboard'
-  }, // CATEGORIES
+  }, // DASHABOARD
+  // CATEGORIES
   {
     path: 'categories',
     component: _components_admin_pages_categories_CategoriesComponent__WEBPACK_IMPORTED_MODULE_4__["default"],

@@ -26,9 +26,9 @@ const routes = [
         path: '/', 
         component: SiteComponent,
         children: [
-            {path: 'produto/:id', component: ProductDetail, name: 'product.detail'}, // PRODUCT DETAIL
-            {path: '', component: HomeComponent, name: 'home'}, // HOME
+            {path: 'produto/:id', component: ProductDetail, name: 'product.detail', props: true}, // PRODUCT DETAIL
             {path: 'contact', component: ContactComponent, name: 'contact'}, // CONTACT
+            {path: '', component: HomeComponent, name: 'home'}, // HOME
         ]
     },
     
@@ -36,7 +36,8 @@ const routes = [
     {path: '/admin', 
         component: AdminComponent,
         children: [
-            {path: '', component: DashboardComponent, name: 'admin.dashboard'},
+            // ADMIN
+            {path: '', component: DashboardComponent, name: 'admin.dashboard'}, // DASHABOARD
 
             // CATEGORIES
             {path: 'categories', component: CategoriesComponent, name: 'admin.categories'}, // HOME
