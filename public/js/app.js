@@ -2318,10 +2318,17 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         page: page
       }));
     },
+    // CADASTRO
+    create: function create() {
+      this.update = false;
+      this.reset();
+      this.showModal = true;
+    },
     // EDITAR
     edit: function edit(id) {
       var _this = this;
 
+      this.reset();
       this.$store.dispatch('loadProduct', id).then(function (response) {
         _this.product = response;
         _this.showModal = true;
@@ -2341,6 +2348,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     success: function success() {
       this.hideModal();
       this.loadProducts(1);
+    },
+    reset: function reset() {
+      this.product = {
+        id: '',
+        name: '',
+        description: '',
+        category_id: ''
+      };
     }
   },
   components: {
@@ -2407,15 +2422,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     product: {
       require: false,
-      type: Object,
-      default: function _default() {
-        return {
-          id: '',
-          name: '',
-          description: '',
-          category_id: ''
-        };
-      }
+      type: Object
     }
   },
   data: function data() {
@@ -2435,6 +2442,10 @@ __webpack_require__.r(__webpack_exports__);
       var action = this.update ? 'updateProduct' : 'storeProduct';
       this.$store.dispatch(action, this.product).then(function () {
         _this.$snotify.success('Sucesso!');
+
+        _this.reset();
+
+        _this.$emit('success');
       }).catch(function (errors) {
         _this.$snotify.error('Algo Errado', 'Erro');
 
@@ -2443,14 +2454,6 @@ __webpack_require__.r(__webpack_exports__);
     },
     reset: function reset() {
       this.errors = {}; // RESET ERRORS
-
-      this.product = {
-        id: '',
-        name: '',
-        description: '',
-        category_id: 13 // RESET PRODUCT
-
-      };
     }
   }
 });
@@ -21848,7 +21851,7 @@ var render = function() {
                 on: {
                   click: function($event) {
                     $event.preventDefault()
-                    _vm.showModal = true
+                    return _vm.create($event)
                   }
                 }
               },

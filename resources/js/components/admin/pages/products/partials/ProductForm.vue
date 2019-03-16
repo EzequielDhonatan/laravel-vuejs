@@ -40,15 +40,7 @@ export default {
         },
         product: {
             require: false,
-            type: Object,
-            default: () => {
-                return {
-                    id: '',
-                    name: '',
-                    description: '',
-                    category_id: ''
-                }
-            }
+            type: Object
         }
     },
     data () {
@@ -68,6 +60,10 @@ export default {
             this.$store.dispatch(action, this.product)
                             .then(() => {
                                 this.$snotify.success('Sucesso!')
+
+                                this.reset()
+
+                                this.$emit('success')
                             })
                             .catch(errors => {
                                 this.$snotify.error('Algo Errado', 'Erro')
@@ -78,13 +74,6 @@ export default {
 
         reset () {
             this.errors = {}  // RESET ERRORS
-
-            this.product = {
-                    id: '',
-                    name: '',
-                    description: '',
-                    category_id: 13
-            } // RESET PRODUCT
         }
     }
 }

@@ -5,7 +5,7 @@
 
         <div class="row">
             <div class="col-md-6">
-                <button class="btn btn-success" @click.prevent="showModal = true">Novo</button>
+                <button class="btn btn-success" @click.prevent="create">Novo</button>
             </div>
 
             <vodal
@@ -105,8 +105,19 @@ export default {
             this.$store.dispatch('loadProducts', {...this.params, page})
         },
 
+        // CADASTRO
+        create () {
+            this.update = false
+
+            this.reset()
+
+            this.showModal = true
+        },
+
         // EDITAR
         edit (id) {
+            this.reset()
+
             this.$store.dispatch('loadProduct', id)
                             .then(response => {
                                 this.product =  response
@@ -136,6 +147,15 @@ export default {
             this.hideModal()
 
             this.loadProducts(1)
+        },
+
+        reset () {
+            this.product = {
+                id: '',
+                name: '',
+                description: '',
+                category_id: '',
+            }
         }
     },
     components: {
