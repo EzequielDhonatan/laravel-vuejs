@@ -29,7 +29,7 @@
 <script>
 import PaginationComponent from '../../../layouts/PaginationComponent' // PAGINATION
 import Item from '../../../layouts/Item' // ITEM
-import SearchComponent from '../../../admin/layouts/SearchComponent' // SEARCH
+import Search from './partials/Search' // SEARCH
  
 export default {
     created () {
@@ -42,7 +42,8 @@ export default {
     
     data () {
         return {
-            filter: ''
+            filter: '',
+            category_id: '',
         }
     },
 
@@ -53,6 +54,7 @@ export default {
         params () {
             return {
                 filter: this.filter,
+                category_id: this.category_id,
                 page: this.products.current_page,
             }
         }
@@ -63,8 +65,9 @@ export default {
             this.$store.dispatch('loadProducts', {...this.params, page})
         },
 
-        search (filter) {
-            this.filter = filter
+        search (values) {
+            this.filter = values.filter
+            this.category_id = values.category_id
 
             this.loadProducts()
         }
@@ -73,7 +76,7 @@ export default {
     components: {
         paginate: PaginationComponent, // PAGINATION
         Item, // ITEM
-        search: SearchComponent, // SEACH
+        Search, // SEACH
     }
 }
 </script>
