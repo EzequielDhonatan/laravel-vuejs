@@ -41167,6 +41167,11 @@ var app = new Vue({
 }); // LOAD CATEGORIES
 
 _vuex_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch('loadCategories');
+_vuex_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch('checkLogin').then(function () {
+  return _routes_index__WEBPACK_IMPORTED_MODULE_1__["default"].push({
+    name: 'admin.dashboard'
+  });
+});
 
 /***/ }),
 
@@ -41174,8 +41179,13 @@ _vuex_store__WEBPACK_IMPORTED_MODULE_2__["default"].dispatch('loadCategories');
 /*!***********************************!*\
   !*** ./resources/js/bootstrap.js ***!
   \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _config_configs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./config/configs */ "./resources/js/config/configs.js");
+
 
 try {
   __webpack_require__(/*! bootstrap */ "./node_modules/bootstrap/dist/js/bootstrap.js");
@@ -41202,6 +41212,9 @@ if (token) {
 } else {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
+
+var tokenAcess = localStorage.getItem(_config_configs__WEBPACK_IMPORTED_MODULE_0__["NAME_TOKEN"]);
+if (tokenAcess) window.axios.defaults.headers.common['Authorization'] = "Bearer ".concat(tokenAcess);
 
 /***/ }),
 
@@ -43027,13 +43040,16 @@ __webpack_require__.r(__webpack_exports__);
 /*!****************************************!*\
   !*** ./resources/js/config/configs.js ***!
   \****************************************/
-/*! exports provided: URL_BASE */
+/*! exports provided: URL_BASE, NAME_TOKEN */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "URL_BASE", function() { return URL_BASE; });
-var URL_BASE = '/api/v1/';
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NAME_TOKEN", function() { return NAME_TOKEN; });
+var URL_BASE = '/api/v1/'; // API/V1
+
+var NAME_TOKEN = 'TOKEN_AUTH'; // TOKEN AUTH
 
 /***/ }),
 
@@ -43194,6 +43210,8 @@ router.beforeEach(function (to, from, next) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _config_configs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../config/configs */ "./resources/js/config/configs.js");
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   state: {
     me: {},
@@ -43210,10 +43228,26 @@ __webpack_require__.r(__webpack_exports__);
 
       return axios.post('/api/auth', params).then(function (response) {
         context.commit('AUTH_USER_OK', response.data.user);
+        localStorage.setItem(_config_configs__WEBPACK_IMPORTED_MODULE_0__["NAME_TOKEN"], response.data.token);
       }).catch(function (error) {
         return console.log(error);
       }).finally(function () {
         return context.commit('PRELOADER', false);
+      });
+    },
+    checkLogin: function checkLogin(context) {
+      context.commit('PRELOADER', true);
+      return new Promise(function (resolve, reject) {
+        var token = localStorage.getItem(_config_configs__WEBPACK_IMPORTED_MODULE_0__["NAME_TOKEN"]);
+        if (!token) return reject();
+        axios.get('/api/me').then(function (response) {
+          context.commit('AUTH_USER_OK', response.data.user);
+          resolve();
+        }).catch(function () {
+          return reject();
+        }).finally(function () {
+          return context.commit('PRELOADER', false);
+        });
       });
     }
   }
