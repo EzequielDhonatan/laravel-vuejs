@@ -4,17 +4,33 @@ import VueRouter from 'vue-router'
 import AdminComponent from '../components/admin/AdminComponent'; // ADMIN
 import DashboardComponent from '../components/admin/pages/dashboard/DashboardComponent'; // DASHBOARD
 
-// CATEGORIES
+// BACKEND - CATEGORIES
 import CategoriesComponent from '../components/admin/pages/categories/CategoriesComponent'; // HOME
 import AddCategoryComponent from '../components/admin/pages/categories/AddCategoryComponent'; // CREATE
 import EditCategoryComponent from '../components/admin/pages/categories/EditCategoryComponent'; // EDIT
 
-// PRODUCTS
+// BACKEND - PRODUCTS
 import ProductsComponent from '../components/admin/pages/products/ProductsComponent' // HOME
+
+// FRONT END - HOME
+import SiteComponent from '../components/frontend/SiteComponent' // LAYOUT
+import HomeComponent from '../components/frontend/pages/home/HomeComponent' // HOME
+import ContactComponent from '../components/frontend/pages/contact/ContactComponent' // CONTACT
 
 Vue.use(VueRouter)
 
 const routes = [
+    // FRONTEND
+    {
+        path: '/', 
+        component: SiteComponent,
+        children: [
+            {path: '', component: HomeComponent, name: 'home'},
+            {path: 'contact', component: ContactComponent, name: 'contact'},
+        ]
+    },
+    
+    // BACKEND
     {path: '/admin', 
         component: AdminComponent,
         children: [
