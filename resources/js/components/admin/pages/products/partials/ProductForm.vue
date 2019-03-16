@@ -18,7 +18,7 @@
 
             <div :class="['form-group', {'has-error': errors.image}]">
                 <div v-if="errors.image">{{ errors.image[0] }}</div>
-                <input type="file" class="form-control" @change="onFileChange">
+                <input type="file" class="form-control" @change="onFileChange"> 
             </div>
 
             <div :class="['form-group', {'has-error': errors.description}]">
@@ -63,9 +63,18 @@ export default {
         onSubmit () {
             let action = this.update ? 'updateProduct' : 'storeProduct'
 
-            this.$store.dispatch(action, this.product)
+            const formData = new FormData()
+            if (this.upload != null)
+                formData.append('image', this.upload)
+
+            formData.append('id', this.product.id)
+            formData.append('name', this.product.name)
+            formData.append('description', this.product.description)
+            formData.append('category_id', this.product.category_id)
+
+            this.$store.dispatch(action, formData)
                             .then(() => {
-                                this.$snotify.success('Sucesso!')
+                                this.$snotify.success('Sucesso ao enviar!')
 
                                 this.reset()
 
@@ -88,9 +97,11 @@ export default {
             let files = e.target.files || e.dataTransfer.files
             if (!files.length)
                 return
-            
-            this.upload = file[0]
+
+            this.upload = files[0]
         },
+
+        
     }
 }
 </script>

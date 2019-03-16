@@ -3,6 +3,12 @@ import { URL_BASE } from '../../../config/configs'
 
 const RESOURCE = 'products'
 
+const CONFIGS = {
+    headers: {
+        'content-type' : 'multipart/form-data',
+    }
+}
+
 export default {
 
     // CARREGAR PRODUTOS / CADASTRAR
@@ -30,14 +36,18 @@ export default {
     },
 
     // CADASTRAR
-    storeProduct (context, params) {
-        context.commit('PRELOADER', true) // STAT PRELOADER
+    storeProduct (context, formData) {
+        context.commit('PRELOADER', true)
 
         return new Promise((resolve, reject) => {
-            axios.post(`${URL_BASE}${RESOURCE}`, params)
+            axios.post(`${URL_BASE}${RESOURCE}`, formData, CONFIGS)
                     .then(response => resolve())
-                    .catch(error => reject(error.response))
-                    // .finally(() => context.commit('PRELOADER', false)) // STOP PRELOADER
+                    .catch(error => {
+                        context.commit('PRELOADER', false)
+                        
+                        reject(error.response)
+                    })
+                    // .finally(() => context.commit('PRELOADER', false))
         })
     },
 

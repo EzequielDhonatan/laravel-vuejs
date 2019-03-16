@@ -2519,8 +2519,14 @@ __webpack_require__.r(__webpack_exports__);
       var _this = this;
 
       var action = this.update ? 'updateProduct' : 'storeProduct';
-      this.$store.dispatch(action, this.product).then(function () {
-        _this.$snotify.success('Sucesso!');
+      var formData = new FormData();
+      if (this.upload != null) formData.append('image', this.upload);
+      formData.append('id', this.product.id);
+      formData.append('name', this.product.name);
+      formData.append('description', this.product.description);
+      formData.append('category_id', this.product.category_id);
+      this.$store.dispatch(action, formData).then(function () {
+        _this.$snotify.success('Sucesso ao enviar!');
 
         _this.reset();
 
@@ -2539,7 +2545,7 @@ __webpack_require__.r(__webpack_exports__);
     onFileChange: function onFileChange(e) {
       var files = e.target.files || e.dataTransfer.files;
       if (!files.length) return;
-      this.upload = file[0];
+      this.upload = files[0];
     }
   }
 });
@@ -40421,14 +40427,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!*******************************************************************************!*\
   !*** ./resources/js/components/admin/pages/products/partials/ProductForm.vue ***!
   \*******************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ProductForm_vue_vue_type_template_id_5dab45fb_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ProductForm.vue?vue&type=template&id=5dab45fb&scoped=true& */ "./resources/js/components/admin/pages/products/partials/ProductForm.vue?vue&type=template&id=5dab45fb&scoped=true&");
 /* harmony import */ var _ProductForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ProductForm.vue?vue&type=script&lang=js& */ "./resources/js/components/admin/pages/products/partials/ProductForm.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ProductForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ProductForm_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -40458,7 +40465,7 @@ component.options.__file = "resources/js/components/admin/pages/products/partial
 /*!********************************************************************************************************!*\
   !*** ./resources/js/components/admin/pages/products/partials/ProductForm.vue?vue&type=script&lang=js& ***!
   \********************************************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -40862,6 +40869,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var RESOURCE = 'products';
+var CONFIGS = {
+  headers: {
+    'content-type': 'multipart/form-data'
+  }
+};
 /* harmony default export */ __webpack_exports__["default"] = ({
   // CARREGAR PRODUTOS / CADASTRAR
   loadProducts: function loadProducts(context, params) {
@@ -40890,15 +40902,15 @@ var RESOURCE = 'products';
     });
   },
   // CADASTRAR
-  storeProduct: function storeProduct(context, params) {
-    context.commit('PRELOADER', true); // STAT PRELOADER
-
+  storeProduct: function storeProduct(context, formData) {
+    context.commit('PRELOADER', true);
     return new Promise(function (resolve, reject) {
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("".concat(_config_configs__WEBPACK_IMPORTED_MODULE_1__["URL_BASE"]).concat(RESOURCE), params).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.post("".concat(_config_configs__WEBPACK_IMPORTED_MODULE_1__["URL_BASE"]).concat(RESOURCE), formData, CONFIGS).then(function (response) {
         return resolve();
       }).catch(function (error) {
-        return reject(error.response);
-      }); // .finally(() => context.commit('PRELOADER', false)) // STOP PRELOADER
+        context.commit('PRELOADER', false);
+        reject(error.response);
+      }); // .finally(() => context.commit('PRELOADER', false))
     });
   },
   // EDITAR / ATUALIZAR
