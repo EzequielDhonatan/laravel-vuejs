@@ -2965,7 +2965,21 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-/* harmony default export */ __webpack_exports__["default"] = ({});
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      formData: {
+        email: '',
+        password: ''
+      }
+    };
+  },
+  methods: {
+    login: function login() {
+      this.$store.dispatch('login', this.formData);
+    }
+  }
+});
 
 /***/ }),
 
@@ -23524,52 +23538,101 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _c("div", { staticClass: "col-md-8" }, [
+        _c(
+          "form",
+          {
+            staticClass: "form",
+            on: {
+              submit: function($event) {
+                $event.preventDefault()
+                return _vm.login($event)
+              }
+            }
+          },
+          [
+            _c("div", { staticClass: "card" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.email,
+                        expression: "formData.email"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "email", placeholder: "E-mail" },
+                    domProps: { value: _vm.formData.email },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.formData, "email", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.formData.password,
+                        expression: "formData.password"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "password", placeholder: "Senha" },
+                    domProps: { value: _vm.formData.password },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.$set(_vm.formData, "password", $event.target.value)
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _vm._m(1)
+              ])
+            ])
+          ]
+        )
+      ])
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("form", { staticClass: "form" }, [
-            _c("div", { staticClass: "card" }, [
-              _c("div", { staticClass: "card-header" }, [
-                _c("h1", [_vm._v("Login")])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c("div", { staticClass: "form-group" }, [
-                  _c("input", {
-                    staticClass: "form-control",
-                    attrs: { type: "email", placeholder: "E-mail" }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c("input", {
-                    staticClass: "form-control",
-                    attrs: { type: "password", placeholder: "Senha" }
-                  })
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "form-group" }, [
-                  _c(
-                    "button",
-                    {
-                      staticClass: "btn btn-success",
-                      attrs: { type: "submit" }
-                    },
-                    [_vm._v("Acessar")]
-                  )
-                ])
-              ])
-            ])
-          ])
-        ])
-      ])
+    return _c("div", { staticClass: "card-header" }, [
+      _c("h1", [_vm._v("Login")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c(
+        "button",
+        { staticClass: "btn btn-success", attrs: { type: "submit" } },
+        [_vm._v("Acessar")]
+      )
     ])
   }
 ]
@@ -43093,6 +43156,34 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 
 /***/ }),
 
+/***/ "./resources/js/vuex/modules/auth/auth.js":
+/*!************************************************!*\
+  !*** ./resources/js/vuex/modules/auth/auth.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ({
+  state: {
+    me: {},
+    authenticated: false
+  },
+  mutations: {},
+  actions: {
+    login: function login(context, params) {
+      axios.post('/api/auth', params).then(function (response) {
+        return console.log(response);
+      }).catch(function (error) {
+        return console.log(error);
+      });
+    }
+  }
+});
+
+/***/ }),
+
 /***/ "./resources/js/vuex/modules/cart/cart.js":
 /*!************************************************!*\
   !*** ./resources/js/vuex/modules/cart/cart.js ***!
@@ -43416,6 +43507,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _modules_categories_categories__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./modules/categories/categories */ "./resources/js/vuex/modules/categories/categories.js");
 /* harmony import */ var _modules_products_products__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./modules/products/products */ "./resources/js/vuex/modules/products/products.js");
 /* harmony import */ var _modules_cart_cart__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./modules/cart/cart */ "./resources/js/vuex/modules/cart/cart.js");
+/* harmony import */ var _modules_auth_auth__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./modules/auth/auth */ "./resources/js/vuex/modules/auth/auth.js");
 
 
  // PRELOADER
@@ -43426,6 +43518,8 @@ __webpack_require__.r(__webpack_exports__);
 
  // CART
 
+ // AUTH
+
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   modules: {
@@ -43435,7 +43529,9 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     // CATEGORIES
     products: _modules_products_products__WEBPACK_IMPORTED_MODULE_4__["default"],
     // PRODUCTS
-    cart: _modules_cart_cart__WEBPACK_IMPORTED_MODULE_5__["default"] // CART
+    cart: _modules_cart_cart__WEBPACK_IMPORTED_MODULE_5__["default"],
+    // CART
+    auth: _modules_auth_auth__WEBPACK_IMPORTED_MODULE_6__["default"] // AUTH
 
   }
 }));

@@ -5,7 +5,7 @@
 
             <div class="col-md-8">
 
-                <form class="form">
+                <form class="form" @submit.prevent="login">
 
                     <div class="card">
 
@@ -15,11 +15,11 @@
 
                         <div class="card-body">
                             <div class="form-group">
-                                <input type="email" class="form-control" placeholder="E-mail">    
+                                <input type="email" class="form-control" v-model="formData.email" placeholder="E-mail">    
                             </div>
 
                             <div class="form-group">
-                                <input type="password" class="form-control" placeholder="Senha">
+                                <input type="password" class="form-control" v-model="formData.password" placeholder="Senha">
                             </div>
 
                             <div class="form-group">
@@ -40,6 +40,19 @@
 
 <script>
 export default {
-    
+    data () {
+        return {
+            formData: {
+                email: '',
+                password: '',
+            }
+        }
+    },
+
+    methods: {
+        login () {
+            this.$store.dispatch('login', this.formData)
+        }
+    }
 }
 </script>
