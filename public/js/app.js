@@ -2703,33 +2703,44 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _layouts_PaginationComponent__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../layouts/PaginationComponent */ "./resources/js/components/layouts/PaginationComponent.vue");
 /* harmony import */ var _layouts_Item__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../layouts/Item */ "./resources/js/components/layouts/Item.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+/* harmony import */ var _admin_layouts_SearchComponent__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../admin/layouts/SearchComponent */ "./resources/js/components/admin/layouts/SearchComponent.vue");
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; var ownKeys = Object.keys(source); if (typeof Object.getOwnPropertySymbols === 'function') { ownKeys = ownKeys.concat(Object.getOwnPropertySymbols(source).filter(function (sym) { return Object.getOwnPropertyDescriptor(source, sym).enumerable; })); } ownKeys.forEach(function (key) { _defineProperty(target, key, source[key]); }); } return target; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+ // PAGINATION
+
+ // ITEM
+
+ // SEARCH
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
@@ -2739,23 +2750,40 @@ __webpack_require__.r(__webpack_exports__);
         this.$store.dispatch('loadProducts', {})
     */
   },
+  data: function data() {
+    return {
+      filter: ''
+    };
+  },
   computed: {
     products: function products() {
       return this.$store.state.products.items;
+    },
+    params: function params() {
+      return {
+        filter: this.filter,
+        page: this.products.current_page
+      };
     }
   },
   methods: {
     loadProducts: function loadProducts() {
       var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
-      this.$store.dispatch('loadProducts', {
+      this.$store.dispatch('loadProducts', _objectSpread({}, this.params, {
         page: page
-      });
+      }));
+    },
+    search: function search(filter) {
+      this.filter = filter;
+      this.loadProducts();
     }
   },
   components: {
     paginate: _layouts_PaginationComponent__WEBPACK_IMPORTED_MODULE_0__["default"],
     // PAGINATION
-    Item: _layouts_Item__WEBPACK_IMPORTED_MODULE_1__["default"] // ITEM
+    Item: _layouts_Item__WEBPACK_IMPORTED_MODULE_1__["default"],
+    // ITEM
+    search: _admin_layouts_SearchComponent__WEBPACK_IMPORTED_MODULE_2__["default"] // SEACH
 
   }
 });
@@ -22912,6 +22940,8 @@ var render = function() {
     "div",
     [
       _c("h1", [_vm._v("Produtos")]),
+      _vm._v(" "),
+      _c("search", { on: { search: _vm.search } }),
       _vm._v(" "),
       _c(
         "div",
