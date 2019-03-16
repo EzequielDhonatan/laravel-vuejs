@@ -18,6 +18,7 @@ import HomeComponent from '../components/frontend/pages/home/HomeComponent' // H
 import ContactComponent from '../components/frontend/pages/contact/ContactComponent' // CONTACT
 import ProductDetail from '../components/frontend/pages/product/ProductDetail' // PRODUCT DETAIL
 import CartComponent from '../components/frontend/pages/cart/CartComponent' // CART
+import LoginComponent from '../components/frontend/pages/login/LoginComponent' // LOGIN
 
 Vue.use(VueRouter)
 
@@ -27,6 +28,7 @@ const routes = [
         path: '/', 
         component: SiteComponent,
         children: [
+            {path: 'login', component: LoginComponent, name: 'login'}, // LOGIN
             {path: 'cart', component: CartComponent, name: 'cart'}, // CART
             {path: 'produto/:id', component: ProductDetail, name: 'product.detail', props: true}, // PRODUCT DETAIL
             {path: 'contact', component: ContactComponent, name: 'contact'}, // CONTACT
