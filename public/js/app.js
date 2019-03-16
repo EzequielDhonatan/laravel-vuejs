@@ -2976,7 +2976,13 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     login: function login() {
-      this.$store.dispatch('login', this.formData);
+      var _this = this;
+
+      this.$store.dispatch('login', this.formData).then(function () {
+        return _this.$router.push({
+          name: 'admin.dashboard'
+        });
+      });
     }
   }
 });
@@ -43170,13 +43176,21 @@ __webpack_require__.r(__webpack_exports__);
     me: {},
     authenticated: false
   },
-  mutations: {},
+  mutations: {
+    AUTH_USER_OK: function AUTH_USER_OK(state, user) {
+      state.authenticated = true, state.me = user;
+    }
+  },
   actions: {
     login: function login(context, params) {
-      axios.post('/api/auth', params).then(function (response) {
-        return console.log(response);
+      context.commit('PRELOADER', true); // STAT PRELOADER
+
+      return axios.post('/api/auth', params).then(function (response) {
+        context.commit('AUTH_USER_OK', response.data.user);
       }).catch(function (error) {
         return console.log(error);
+      }).finally(function () {
+        return context.commit('PRELOADER', false);
       });
     }
   }
