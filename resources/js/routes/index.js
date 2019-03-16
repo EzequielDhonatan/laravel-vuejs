@@ -12,11 +12,12 @@ import EditCategoryComponent from '../components/admin/pages/categories/EditCate
 // BACKEND - PRODUCTS
 import ProductsComponent from '../components/admin/pages/products/ProductsComponent' // HOME
 
-// FRONT END - HOME
+// FRONT END 
 import SiteComponent from '../components/frontend/SiteComponent' // LAYOUT
 import HomeComponent from '../components/frontend/pages/home/HomeComponent' // HOME
 import ContactComponent from '../components/frontend/pages/contact/ContactComponent' // CONTACT
 import ProductDetail from '../components/frontend/pages/product/ProductDetail' // PRODUCT DETAIL
+import CartComponent from '../components/frontend/pages/cart/CartComponent' // CART
 
 Vue.use(VueRouter)
 
@@ -26,6 +27,7 @@ const routes = [
         path: '/', 
         component: SiteComponent,
         children: [
+            {path: 'cart', component: CartComponent, name: 'cart'}, // CART
             {path: 'produto/:id', component: ProductDetail, name: 'product.detail', props: true}, // PRODUCT DETAIL
             {path: 'contact', component: ContactComponent, name: 'contact'}, // CONTACT
             {path: '', component: HomeComponent, name: 'home'}, // HOME

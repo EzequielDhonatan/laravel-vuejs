@@ -9,17 +9,21 @@
             <li class="nav-item">
                 <router-link class="nav-link" :to="{name: 'contact'}">CONTATO</router-link>
             </li>
-        </ul>
+
+            <li class="nav-item">
+                <router-link class="nav-link" :to="{name: 'cart'}">CARRINHO ({{ cart.length }})</router-link>
+            </li>
+        </ul> <!-- nav -->
 
     </div>
 </template>
 
 <script>
 export default {
-    
+    computed: {
+        cart () {
+            return this.$store.state.cart.products
+        }
+    }
 }
 </script>
-
-<style scoped>
-
-</style>
